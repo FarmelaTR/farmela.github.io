@@ -853,7 +853,7 @@ function renderBar(){
   const up = $("#up"); up.style.bottom = n ? `calc(${$("#bar").offsetHeight}px + 1em)` : "1.2em";
   if (!n) return;
   const t = totals();
-  $("#barCount").textContent = `Listenizde ${n} ürün`;
+  $("#barCount").textContent = `Listenizde ${n} ürün var`;
   $("#barTotal").textContent = t.known ? tl(t.known) + (t.unknown ? " +" : "") : "";
   $("#openSheet").textContent = "Listemi gör ve gönder";
 }

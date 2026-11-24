@@ -40,7 +40,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outl
 
 /* Header */
 header{padding:1.3em 0 .4em}
-.head{display:flex;align-items:center;gap:.8em}
+.head{display:flex;align-items:flex-end;gap:.8em}
+.head > div{flex:1 1 auto;min-width:0}
+.head .tag{margin:0 0 .05em}
+.head .textsize{align-self:flex-start;flex:0 0 auto}
 .logo{width:3.6em;height:auto;flex:0 0 3.6em}
 .kicker{margin:0;color:var(--taupe);font-weight:600;font-size:.8em;letter-spacing:.06em;text-transform:uppercase}
 .brand{font-size:1.7em;font-weight:700;margin:0;color:var(--accent);line-height:1.15}
@@ -205,11 +208,12 @@ fieldset{border:0;margin:0;padding:0}
 
 /* ---------- Phone: compact top so search and products show sooner ---------- */
 @media (max-width:699px){
-  header{padding:.8em 0 0}
+  header{padding:.8em 0 0;position:relative}
+  .head .textsize{position:absolute;top:.6em;right:0}
   .logo{width:2.9em;flex-basis:2.9em}
   .tag{font-size:.88em;color:var(--muted)}
   .tools{margin-top:.6em}
-  .textsize{min-height:2.3em;padding:0 .85em;font-size:.88em}
+  .textsize{min-height:2.1em;padding:0 .8em;font-size:.82em}
   .infos{display:flex;flex-wrap:wrap;gap:.35em;margin-top:.6em}
   .info{flex:0 0 auto}
   .info[open]{flex-basis:100%}
@@ -273,8 +277,8 @@ fieldset{border:0;margin:0;padding:0}
 <body>
 <div class="wrap">
   <header>
-    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="tag">Vitamin, takviye ve dermokozmetik.</p></div></div>
-    <div class="tools"><button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button><p class="promo"><span class="pct">%10</span><span>3. siparişte sepette indirim</span></p></div>
+    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="tag">Vitamin, takviye ve dermokozmetik.</p></div><button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button></div>
+    <div class="tools"><p class="promo"><span class="pct">%10</span><span>3. siparişte sepette indirim</span></p></div>
     <div class="infos">
       <details class="info">
         <summary><span class="it">Nasıl sipariş verilir?</span><span class="is">3 kısa adım</span></summary>

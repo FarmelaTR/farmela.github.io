@@ -47,6 +47,20 @@ header{padding:1.3em 0 .4em}
 .textsize[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
 .textsize .aa{font-weight:700}
 
+.infos{display:grid;gap:.5em;margin-top:1em}
+.info{display:block;background:var(--surface);border:1px solid var(--line);border-radius:.8em;color:inherit;text-decoration:none}
+.info summary,.shoplink{list-style:none;display:flex;align-items:center;flex-wrap:wrap;gap:.2em .6em;min-height:3em;padding:.55em .9em;cursor:pointer;font-weight:600}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after,.shoplink::after{content:"";margin-left:auto;flex:0 0 .55em;width:.55em;height:.55em;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg)}
+.info[open] summary::after{transform:rotate(-135deg)}
+.shoplink::after{transform:rotate(-45deg)}
+.info summary:focus-visible,.shoplink:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:.8em}
+.it{color:var(--accent)}
+.is{color:var(--muted);font-weight:500;font-size:.88em}
+.ib{padding:0 .9em .9em}
+.ib p{margin:0 0 .35em}
+.ib a{color:var(--accent);font-weight:600}
+.info .steps{margin:0;padding:0 .9em .9em}
 .steps{list-style:none;margin:1em 0 0;padding:0;display:grid;gap:.5em}
 .steps li{display:flex;gap:.75em;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:.8em;padding:.7em .85em}
 .num{flex:0 0 1.8em;height:1.8em;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:.95em}
@@ -113,6 +127,10 @@ h3.group{font-size:1.15em;font-weight:600;margin:1.4em 0 .6em;color:var(--accent
 @media (prefers-reduced-motion: reduce){.vsel.flash{animation:none;outline:3px solid #b45309}}
 .vchip{display:inline-block;margin-left:.3em;padding:.05em .55em;border-radius:.45em;background:var(--accent);color:var(--accent-ink);font-size:.85em;font-weight:700;white-space:nowrap;vertical-align:.05em}
 .sizes{display:block;color:var(--muted);font-size:.85em;margin-top:.15em}
+.shop-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:3em;border-radius:.75em;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font-weight:700;text-decoration:none;padding:.45em 1em;text-align:center;line-height:1.25}
+.shop-btn small{font-weight:500;color:var(--muted);font-size:.8em}
+.shop-soon{margin:0;padding:.6em .85em;border-radius:.7em;background:var(--accent-soft);color:var(--muted);font-size:.9em}
+.shop-mini{justify-self:start;color:var(--accent);font-weight:600;font-size:.88em;text-decoration:underline;text-underline-offset:.2em}
 .badge{display:inline-block;background:var(--badge);color:var(--badge-ink);font-size:.78em;font-weight:600;border-radius:.4em;padding:.05em .5em;margin-bottom:.3em}
 .price{display:block;font-size:1.15em;font-weight:700;margin:.2em 0 0;font-variant-numeric:tabular-nums}
 .price-ask{font-size:.88em;color:var(--muted);margin:.2em 0 0}
@@ -184,7 +202,8 @@ fieldset{border:0;margin:0;padding:0}
   body{font-size:18px}
   .wrap{max-width:1180px;padding:0 28px}
   header{padding-top:1.8em}
-  .steps{grid-template-columns:repeat(3,1fr)}
+  .infos{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+  .info .steps{grid-template-columns:1fr}
   .note{display:grid;grid-template-columns:1fr 1fr;gap:.4em 1.5em}
   .note p+p{margin-top:0}
   .find{display:grid;grid-template-columns:minmax(0,1fr);max-width:none}
@@ -229,14 +248,24 @@ fieldset{border:0;margin:0;padding:0}
     <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><p class="kicker">Şişli · Elden teslimat</p><h1 class="brand">Hey Farmela</h1></div></div>
     <p class="tag">Vitamin, takviye ve dermokozmetik ürünleri adresinize teslim ediyoruz.</p>
     <button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button>
-    <ol class="steps" aria-label="Nasıl sipariş verilir">
-      <li><span class="num">1</span><span>Ürünü bulun, <b>Listeye ekle</b>'ye basın.</span></li>
+    <div class="infos">
+      <details class="info">
+        <summary><span class="it">Nasıl sipariş verilir?</span><span class="is">3 kısa adım</span></summary>
+        <ol class="steps" aria-label="Nasıl sipariş verilir">
+      <li><span class="num">1</span><span>Ürünü bulun, <b>Listeye ekle</b>'ye basın. Birden fazla boyutu olan ürünlerde önce boyutu seçin.</span></li>
       <li><span class="num">2</span><span>Alttaki yeşil <b>Listemi gönder</b> düğmesine basın.</span></li>
       <li><span class="num">3</span><span>WhatsApp'ta <b>gönder</b>'e basın. Fiyat ve teslimat saati size bildirilir.</span></li>
-    </ol>
-    <div class="note">
-      <p><b>Ön ödeme alınmaz.</b> Ödeme, sipariş onayından sonra nakit, kredi kartı veya havale ile yapılır.</p>
-      <p><b>Teslimat:</b> Nişantaşı, Bomonti ve Kurtuluş bölgelerine yapılır.<br>900 TL ve üzeri siparişlerde teslimat ücretsizdir.<br>900 TL altı siparişlerde teslimat ücreti 150 TL'dir.<br>Siparişinizi eczaneden de teslim alabilirsiniz.</p>
+        </ol>
+      </details>
+      <details class="info">
+        <summary><span class="it">Ödeme</span><span class="is">Nakit, kredi kartı veya havale</span></summary>
+        <div class="ib"><p>Ön ödeme alınmaz. Ödeme, sipariş onayından sonra nakit, kredi kartı veya havale ile yapılır.</p><p>Kredi kartıyla hemen ödemek isterseniz ürünleri <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a> üzerinden satın alabilirsiniz.</p></div>
+      </details>
+      <details class="info">
+        <summary><span class="it">Teslimat</span><span class="is">900 TL ve üzeri ücretsiz</span></summary>
+        <div class="ib"><p>Nişantaşı, Bomonti ve Kurtuluş bölgelerine teslimat yapılır.</p><p>900 TL ve üzeri siparişlerde teslimat ücretsizdir.</p><p>900 TL altı siparişlerde teslimat ücreti 150 TL'dir.</p><p>Siparişinizi eczaneden de teslim alabilirsiniz.</p></div>
+      </details>
+      <a class="info shoplink" href="https://farmelatr.com" target="_blank" rel="noopener"><span class="it">Kredi kartıyla hemen ödeyin</span><span class="is">farmelatr.com</span></a>
     </div>
   </header>
 
@@ -528,6 +557,16 @@ const DESC = {
 "Oral-B Pro-Expert Arayüz Fırçası Başlangıç Kiti (1 set)": "Diş arası temizliği için sap ve farklı boy fırça başlıkları içeren başlangıç seti.",
 "B-Good Dijital Ateş Ölçer (1 adet)": "Dijital ekranlı ateş ölçer (termometre)."
 };
+/* ---- Online card payment: product page on farmelatr.com. Key = photo file name (one per size), or product name. */
+const SHOP = {"oral-b-junior-dis-fircasi-6-12-yas-ekstra-yumusak": "oral-b-junior-dis-fircasi-6-12-yas-ekstra-yumusak", "art-de-huile-fly-mix-vucut-spreyi-120-ml": "art-de-huile-fly-mix-vucut-spreyi-120-ml", "b-good-digital-ates-olcer": "b-good-digital-ates-olcer", "balen-omega-3-norvec-balik-yagi-1380-mg-100-kapsul": "balen-omega-3-norvec-balik-yagi-1380-mg-100-kapsul", "balen-omega-3-norvec-balik-yagi-1380-mg-200-kapsul": "balen-omega-3-norvec-balik-yagi-1380-mg-200-kapsul", "bioderma-photoderm-creme-spf-50-gunes-kremi-40-ml": "bioderma-photoderm-creme-spf-50-gunes-kremi-40-ml", "bioderma-sebium-hydra-nemlendirici-bakim-kremi-40-ml": "bioderma-sebium-hydra-nemlendirici-bakim-kremi-40-ml", "curaprox-kids-ultra-soft-4-12-yas-firca": "curaprox-kids-ultra-soft-4-12-yas-firca", "kartix-glucosamine-complex-90-kapsul": "kartix-glucosamine-complex-90-kapsul", "la-roche-posay-effaclar-tanisma-kiti": "la-roche-posay-effaclar-tanisma-kiti", "marvis-jasmin-mint-dis-macunu-25-ml": "marvis-jasmin-mint-dis-macunu-25-ml", "new-life-mag4-day-ve-night-30-30-tablet": "new-life-mag4-day-ve-night-30-30-tablet", "nutraxin-quercetin-bromelain-30-tablet": "nutraxin-quercetin-bromelain-30-tablet", "nutraxin-vitamin-max-c-d-zinc-60-tablet": "nutraxin-vitamin-max-c-d-zinc-60-tablet", "oral-b-essential-floss-naneli-mumlu-dis-ipi-50-m": "oral-b-essential-floss-naneli-mumlu-dis-ipi-50-m", "oral-b-pro-expert-clinic-line-interdental-arayuz-fircasi-starter-kit": "oral-b-pro-expert-clinic-line-interdental-arayuz-fircasi-starter-kit", "orzax-ocean-extramag-uclu-kombinasyon-200-mg-30-tablet": "orzax-ocean-extramag-uclu-kombinasyon-200-mg-30-tablet", "orzax-ocean-extramag-uclu-kombinasyon-200-mg-60-tablet": "orzax-ocean-extramag-uclu-kombinasyon-200-mg-60-tablet", "orzax-ocean-passiflora-300-mg-30-kapsul": "orzax-ocean-passiflora-300-mg-30-kapsul", "orzax-ocean-plus-omega-3-1200-mg-balik-yagi-30-kapsul": "orzax-ocean-plus-omega-3-1200-mg-balik-yagi-30-kapsul", "orzax-ocean-polysitol-30-sase": "orzax-ocean-polysitol-30-sase", "orzax-ocean-vitamin-d3k2-damla-20-ml": "orzax-ocean-vitamin-d3k2-damla-20-ml", "rocs-coffee-tobacco-dis-macunu-74-g": "rocs-coffee-tobacco-dis-macunu-74-g", "rocs-kids-meyve-kulahi-cocuk-dis-macunu-45-g": "rocs-kids-meyve-kulahi-cocuk-dis-macunu-45-g", "roll-bant-topuk-bandi-4-adet": "roll-bant-topuk-bandi-4-adet", "signal-white-now-dis-macunu-75-ml": "signal-white-now-dis-macunu-75-ml", "solante-acnes-spf-50-gunes-koruyucu-losyon-150-ml": "solante-acnes-spf-50-gunes-koruyucu-losyon-150-ml", "solante-antiox-spf-50-gunes-koruyucu-losyon-150-ml": "solante-antiox-spf-50-gunes-koruyucu-losyon-150-ml", "solgar-methylcobalamin-vitamin-b12-1000-mcg-30-tablet": "solgar-methylcobalamin-vitamin-b12-1000-mcg-30-tablet", "suda-collagen-multiform-90-tablet": "suda-collagen-multiform-90-tablet", "tepe-interdental-brush-original-arayuz-fircasi-yesil-0-8-mm-size-5-8-li": "tepe-interdental-brush-original-arayuz-fircasi-yesil-0-8-mm-size-5-8-li", "tuba-salisilik-asitli-nasir-bandi-6-adet": "tuba-salisilik-asitli-nasir-bandi-6-adet", "vitaglucan-beta-glukan-c-vitamini-cinko-30-tablet": "vitaglucan-beta-glukan-c-vitamini-cinko-30-tablet", "imuneks-beta-glukan-10-mg-40-kapsul": "imuneks-beta-glukan-10-mg-40-kapsul", "imuneks-plus-beta-glukan-naturel-c-vitamini-30-kapsul": "imuneks-plus-beta-glukan-naturel-c-vitamini-30-kapsul", "el-cilt-bakim-seti-vaseline-oje-makyaj-pamugu": "el-cilt-bakim-seti-vaseline-oje-makyaj-pamugu", "agiz-bakim-mega-set-3-macun-dis-ipi-firca": "agiz-bakim-mega-set-3-macun-dis-ipi-firca", "bebek-baslangic-seti-bepanthol-emzik-dis-kasiyici": "bebek-baslangic-seti-bepanthol-emzik-dis-kasiyici", "mineral-ikilisi-iyot-damla-selenyum": "mineral-ikilisi-iyot-damla-selenyum", "vitafenix-serenita-60-kapsul": "vitafenix-serenita-60-kapsul", "vitafenix-angard-20-kapsul": "vitafenix-angard-20-kapsul", "vitafenix-magna-p-60-kapsul": "vitafenix-magna-p-60-kapsul", "bioderma-atoderm-cream-ultra-kuru-ciltler-bebek-cocuk-yetiskin-nemlendirici-yuz-": "bioderma-atoderm-cream-ultra-kuru-ciltler-bebek-cocuk-yetiskin-nemlendirici-yuz-vucut-bakim-kremi-200-ml", "la-roche-posay-yagli-ve-akneye-egilim-gosteren-cilt-tipleri-icin-effaclar-yuz-te": "la-roche-posay-yagli-ve-akneye-egilim-gosteren-cilt-tipleri-icin-effaclar-yuz-temizleyici-ve-arindirici-jel-400-ml", "Bağışıklık Seti (C Vitamini + Çinko + Propolis + D3)": "bagisiklik-uclu-set-c-vitamini-cinko-propolis-d3", "Çocuk Kemik & Mineral Seti (Pharmaton Kiddi + Ocean Tutti Frutti Şurup)": "cocuk-kemik-mineral-seti"};
+const shopUrl = (img, name) => { const slug = SHOP[img] || SHOP[name]; return slug ? "https://farmelatr.com/" + slug : null; };
+function shopHtml(i, cur, pending){
+  if (pending) return i.vars.some(v => shopUrl(v.img)) ? `<p class="shop-soon">Kredi kartıyla online satın almak için önce ${optWord(i)} seçin.</p>` : "";
+  const u = shopUrl(cur.img, i.name);
+  return u ? `<a class="shop-btn" href="${u}" target="_blank" rel="noopener">Kredi kartıyla online satın al<small>farmelatr.com</small></a>`
+           : `<p class="shop-soon">Bu ürünün online satış sayfası çok yakında hizmetinizde olacak. Şimdilik siparişinizi WhatsApp üzerinden verebilirsiniz.</p>`;
+}
+const miniShop = i => { if (i.vars) return ""; const u = shopUrl(i.img, i.name); return u ? `<a class="shop-mini" href="${u}" target="_blank" rel="noopener">Kartla online satın al ›</a>` : ""; };
 const CATS = [["t","Vitamin & Takviye"],["c","Cilt Bakımı"],["a","Anne & Çocuk"],["k","Kişisel Bakım"],["s","Hazır Setler"]];
 const FREE_FROM = 900, FEE = 150;
 const AREAS = ["Nişantaşı","Bomonti","Kurtuluş","Başka semt"];
@@ -687,7 +726,7 @@ function card(i){
   const act = q
     ? `<div class="inlist"><span class="state">✓ Listenizde</span><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${i.id}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${i.id}" aria-label="Bir artır">+</button></div></div>`
     : `<button type="button" class="add" data-add="${i.id}">+ Listeye ekle</button>`;
-  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}<span class="more">Ürün bilgisi ›</span></span></button>${act}</article>`;
+  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}<span class="more">Ürün bilgisi ›</span></span></button>${act}${miniShop(i)}</article>`;
 }
 
 /* Products with sizes: the list shows the smallest size's photo; the size is chosen on the product page */
@@ -708,7 +747,7 @@ function sizedCard(i){
   const sizes = `<span class="sizes">${cap(optWord(i))}: ${esc(sizeList(i.vars))}</span>`;
   const act = (q ? `<div class="inlist"><span class="state">✓ Listenizde (${q} adet)</span></div>` : "") +
     `<button type="button" class="add" data-open="${i.id}">${q ? "Seçenekleri gör ›" : cap(optWord(i)) + " seçin ›"}</button>`;
-  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi ve seçenekler">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}${sizes}<span class="more">Ürün bilgisi ›</span></span></button>${act}</article>`;
+  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi ve seçenekler">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}${sizes}<span class="more">Ürün bilgisi ›</span></span></button>${act}${miniShop(i)}</article>`;
 }
 
 /* Typo tolerance: a word matches if it appears as written, or is one or two letters off from a word in the name or keywords */
@@ -868,7 +907,7 @@ function renderDetail(){
   $("#detailBody").innerHTML = big +
     `<p class="dcat">${CATS.find(c => c[0]===i.cat)[1]}</p><h3 class="dname">${esc(i.name)}</h3>${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}${sizes}${price}` +
     `<p class="ddesc">${esc(i.desc || "Bu ürünle ilgili sorularınız için WhatsApp üzerinden bize ulaşabilirsiniz.")}</p>` +
-    `<div class="dact">${act}<a class="ask-btn" style="margin:0" href="${waLink(`Merhaba Hey Farmela, ${cur.name} hakkında bir sorum var: `)}" target="_blank" rel="noopener">Bu ürünü eczacımıza sorun</a></div>` +
+    `<div class="dact">${act}${shopHtml(i, cur, pending)}<a class="ask-btn" style="margin:0" href="${waLink(`Merhaba Hey Farmela, ${cur.name} hakkında bir sorum var: `)}" target="_blank" rel="noopener">Bu ürünü eczacımıza sorun</a></div>` +
     `<p class="dnote">${note}</p>`;
 }
 function openDetail(id, fromHistory){

@@ -51,9 +51,10 @@ header{padding:1.3em 0 .4em}
 .promo{display:inline-flex;align-items:center;gap:.4em;margin:0;white-space:nowrap;vertical-align:middle;padding:.12em .7em .12em .14em;border-radius:999px;background:linear-gradient(90deg,var(--accent),#3a3aa8);color:#fff;font-weight:700;font-size:.74em;line-height:1.3;box-shadow:0 2px 8px rgba(29,29,117,.22)}
 .promo .pct{background:#f2c14e;color:#1d1d75;border-radius:999px;padding:.05em .5em;font-weight:800;letter-spacing:.01em}
 .tools{display:flex;align-items:center;flex-wrap:wrap;gap:.4em .35em;margin-top:.8em}
-.textsize{margin:0;display:inline-flex;align-items:center;gap:.5em;min-height:2.6em;padding:0 1em;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
-.textsize[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
-.textsize .aa{font-weight:700}
+.textsize{margin:0;display:inline-grid;place-items:center;width:2.7em;height:2.7em;padding:0;border-radius:50%;border:2px solid var(--line);background:var(--surface);color:var(--accent);cursor:pointer}
+.textsize svg{width:1.45em;height:1.45em;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.textsize[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.textsize[aria-pressed="true"] .plus{display:none}
 
 .infos{display:grid;gap:.5em;margin-top:1em}
 .info{display:block;background:var(--surface);border:1px solid var(--line);border-radius:.8em;color:inherit;text-decoration:none}
@@ -211,10 +212,11 @@ fieldset{border:0;margin:0;padding:0}
 @media (max-width:699px){
   header{padding:.8em 0 0;position:relative}
   .head .textsize{position:absolute;top:.6em;right:0}
+  .head > div{padding-right:2.6em}
   .logo{width:2.9em;flex-basis:2.9em}
   .tag{font-size:.88em;color:var(--muted)}
   .tools{margin-top:.6em}
-  .textsize{min-height:2.1em;padding:0 .8em;font-size:.82em}
+  .textsize{font-size:.9em}
   .infos{display:flex;flex-wrap:wrap;gap:.35em;margin-top:.6em}
   .info{flex:0 0 auto}
   .info[open]{flex-basis:100%}
@@ -278,7 +280,7 @@ fieldset{border:0;margin:0;padding:0}
 <body>
 <div class="wrap">
   <header>
-    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="tag">Vitamin, takviye ve dermokozmetik.</p></div><button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button></div>
+    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="tag">Vitamin, takviye ve dermokozmetik.</p></div><button type="button" class="textsize" id="textsize" aria-pressed="false" aria-label="Yazıyı büyüt" title="Yazıyı büyüt"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M7.5 10.5h6"/><path class="plus" d="M10.5 7.5v6"/></svg></button></div>
     <div class="tools"><p class="promo"><span class="pct">%10</span><span>3. siparişte sepette indirim</span></p></div>
     <div class="infos">
       <details class="info">
@@ -744,7 +746,7 @@ let who = Object.assign({name:"",address:"",how:""}, store.get("heyfarmela-kisi"
 let cat = "all", query = "", sent = false;
 
 /* ---------- Text size ---------- */
-function applySize(big){ document.body.classList.toggle("big", big); $("#textsize").setAttribute("aria-pressed", big); $("#textsize").lastChild.textContent = big ? " Yazıyı küçült" : " Yazıyı büyüt"; }
+function applySize(big){ document.body.classList.toggle("big", big); $("#textsize").setAttribute("aria-pressed", big); const lbl = big ? "Yazıyı küçült" : "Yazıyı büyüt"; $("#textsize").setAttribute("aria-label", lbl); $("#textsize").title = lbl; }
 applySize(store.get("heyfarmela-buyuk", false));
 $("#textsize").addEventListener("click", () => { const big = !document.body.classList.contains("big"); applySize(big); store.set("heyfarmela-buyuk", big); });
 

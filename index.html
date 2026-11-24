@@ -227,16 +227,16 @@ fieldset{border:0;margin:0;padding:0}
 <div class="wrap">
   <header>
     <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><p class="kicker">Şişli · Elden teslimat</p><h1 class="brand">Hey Farmela</h1></div></div>
-    <p class="tag">Vitamin, takviye ve dermokozmetik. Eczaneye gelmenize gerek yok, biz getiriyoruz.</p>
+    <p class="tag">Vitamin, takviye ve dermokozmetik ürünleri adresinize teslim ediyoruz.</p>
     <button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button>
     <ol class="steps" aria-label="Nasıl sipariş verilir">
       <li><span class="num">1</span><span>Ürünü bulun, <b>Listeye ekle</b>'ye basın.</span></li>
       <li><span class="num">2</span><span>Alttaki yeşil <b>Listemi gönder</b> düğmesine basın.</span></li>
-      <li><span class="num">3</span><span>WhatsApp'ta <b>gönder</b>'e basın. Fiyatı ve saati size yazalım.</span></li>
+      <li><span class="num">3</span><span>WhatsApp'ta <b>gönder</b>'e basın. Fiyat ve teslimat saati size bildirilir.</span></li>
     </ol>
     <div class="note">
-      <p><b>Şimdi ödeme yok.</b> Siparişi onaylayınca ödersiniz. Nakit, kart veya havale olur.</p>
-      <p><b>Teslimat:</b> Nişantaşı, Bomonti ve Kurtuluş'a getiriyoruz.<br>900 TL ve üzeri: teslimat ücretsiz.<br>900 TL altı: teslimat 150 TL.<br>Eczaneden gelip de alabilirsiniz.</p>
+      <p><b>Ön ödeme alınmaz.</b> Ödeme, sipariş onayından sonra nakit, kredi kartı veya havale ile yapılır.</p>
+      <p><b>Teslimat:</b> Nişantaşı, Bomonti ve Kurtuluş bölgelerine yapılır.<br>900 TL ve üzeri siparişlerde teslimat ücretsizdir.<br>900 TL altı siparişlerde teslimat ücreti 150 TL'dir.<br>Siparişinizi eczaneden de teslim alabilirsiniz.</p>
     </div>
   </header>
 
@@ -246,7 +246,7 @@ fieldset{border:0;margin:0;padding:0}
       <input id="q" type="search" enterkeyhint="search" placeholder="Ürün veya marka yazın" autocomplete="off">
       <button type="button" id="qclear" hidden>Sil</button>
     </div>
-    <p class="qhint">Örnek: balık yağı, multivitamin, eklem, pişik kremi. Yazım hatası olsa da buluruz.</p>
+    <p class="qhint">Örnek: balık yağı, multivitamin, eklem, pişik kremi. Yazım hatalarında en yakın sonuçlar gösterilir.</p>
     <p class="cats-h" id="cats-h">Veya bir bölüm seçin</p>
     <div class="cats" id="cats" role="group" aria-labelledby="cats-h"></div>
   </section>
@@ -254,10 +254,10 @@ fieldset{border:0;margin:0;padding:0}
   <div class="resbar" id="resbar"></div>
   <main id="catalog" aria-live="polite"></main>
 
-  <a class="ask-btn" id="askLink" href="https://wa.me/905333573784" target="_blank" rel="noopener">Aradığınız ürün yok mu? WhatsApp'tan sorun</a>
+  <a class="ask-btn" id="askLink" href="https://wa.me/905333573784" target="_blank" rel="noopener">Aradığınız ürünü bulamadınız mı? WhatsApp üzerinden bize ulaşın</a>
 
   <footer>
-    <p>Fiyatlar Kasım 2026 fiyatlarıdır ve değişebilir. Siparişte güncel fiyatı size teyit ederiz.</p>
+    <p>Fiyatlar Kasım 2026 itibarıyla geçerlidir ve değişiklik gösterebilir. Güncel fiyat, sipariş onayında bildirilir.</p>
     <p>Gıda takviyeleri ilaç değildir, hastalıkların önlenmesi veya tedavisi amacıyla kullanılmaz.</p>
     <p>WhatsApp: 0533 357 37 84 · <a href="https://instagram.com/farmelatr" target="_blank" rel="noopener">Instagram</a> · <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a></p>
   </footer>
@@ -683,7 +683,7 @@ const pic = i => i.img
 function card(i){
   if (i.vars) return sizedCard(i);
   const q = cart[i.id];
-  const price = i.price != null ? `<span class="price">${tl(i.price)}</span>` : `<span class="price-ask">Fiyatını WhatsApp'tan yazarız</span>`;
+  const price = i.price != null ? `<span class="price">${tl(i.price)}</span>` : `<span class="price-ask">Fiyat için bize ulaşın</span>`;
   const act = q
     ? `<div class="inlist"><span class="state">✓ Listenizde</span><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${i.id}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${i.id}" aria-label="Bir artır">+</button></div></div>`
     : `<button type="button" class="add" data-add="${i.id}">+ Listeye ekle</button>`;
@@ -704,7 +704,7 @@ function sizeList(vars){
 function sizedCard(i){
   const q = inListCount(i);
   const known = i.vars.filter(v => v.price != null).map(v => v.price);
-  const price = known.length ? `<span class="price">${known.length > 1 ? tl(Math.min(...known)) + " – " + tl(Math.max(...known)) : tl(known[0])}</span>` : `<span class="price-ask">Fiyatını WhatsApp'tan yazarız</span>`;
+  const price = known.length ? `<span class="price">${known.length > 1 ? tl(Math.min(...known)) + " – " + tl(Math.max(...known)) : tl(known[0])}</span>` : `<span class="price-ask">Fiyat için bize ulaşın</span>`;
   const sizes = `<span class="sizes">${cap(optWord(i))}: ${esc(sizeList(i.vars))}</span>`;
   const act = (q ? `<div class="inlist"><span class="state">✓ Listenizde (${q} adet)</span></div>` : "") +
     `<button type="button" class="add" data-open="${i.id}">${q ? "Seçenekleri gör ›" : cap(optWord(i)) + " seçin ›"}</button>`;
@@ -756,10 +756,10 @@ function renderCatalog(){
   else if (cat !== "all") list = list.filter(i => i.cat === cat);
   const title = words.length ? `"${esc(query.trim())}" araması` : cat === "pop" ? "Çok tercih edilenler" : cat === "all" ? "Tüm ürünler" : CATS.find(c => c[0]===cat)[1];
   const showAll = words.length || cat !== "all";
-  $("#resbar").innerHTML = `<h2>${title} <span class="count">${list.length} ürün</span></h2>` + (showAll ? `<button type="button" class="showall" data-reset="1">Tümünü göster</button>` : "") + (fuzzy && list.length ? `<p class="qhint" style="width:100%;margin:0">Yazdığınıza en yakın ürünleri gösteriyoruz.</p>` : "");
+  $("#resbar").innerHTML = `<h2>${title} <span class="count">${list.length} ürün</span></h2>` + (showAll ? `<button type="button" class="showall" data-reset="1">Tümünü göster</button>` : "") + (fuzzy && list.length ? `<p class="qhint" style="width:100%;margin:0">Aramanıza en yakın ürünler gösteriliyor.</p>` : "");
   let html = "";
   if (!list.length){
-    html = `<div class="empty"><b>Bu isimle bir ürün bulamadık.</b><br>Yazımı değiştirmeyi deneyin ya da aşağıdaki düğmeyle bize sorun. Çoğu ürünü getirebiliyoruz.</div>`;
+    html = `<div class="empty"><b>Bu isimle bir ürün bulunamadı.</b><br>Farklı bir yazım deneyebilir veya aşağıdaki bağlantıdan bize ulaşabilirsiniz. Listede yer almayan pek çok ürünü temin edebiliyoruz.</div>`;
   } else if (cat === "all" && !words.length){
     CATS.forEach(([k,l]) => { const g = list.filter(i => i.cat === k); if (g.length) html += `<h3 class="group">${l}</h3><div class="list">${g.map(card).join("")}</div>`; });
   } else {
@@ -801,13 +801,13 @@ function refresh(){ save(); renderCatalog(); renderBar(); if (!$("#sheet").hidde
 
 /* ---------- Review sheet ---------- */
 function message(){
-  const lines = Object.entries(cart).map(([k,q]) => { const l = line(k); return `• ${l.name} x${q}` + (l.price != null ? ` (${tl(l.price*q)})` : " (fiyat sorulacak)"); });
+  const lines = Object.entries(cart).map(([k,q]) => { const l = line(k); return `• ${l.name} x${q}` + (l.price != null ? ` (${tl(l.price*q)})` : " (fiyatı bildirilecek)"); });
   const t = totals();
   let txt = "Merhaba Hey Farmela, ön sipariş vermek istiyorum:\n" + lines.join("\n");
   if (t.known) txt += `\n\nFiyatı belli olanların toplamı: ${tl(t.known)}`;
   txt += `\n\nAdım: ${who.name.trim() || "..."}`;
   txt += `\nSemt: ${who.area || "..."}`;
-  txt += `\nTeslimat: ${who.how === "eve" ? "Eve getirin" : who.how === "eczane" ? "Eczaneden kendim alacağım" : "..."}`;
+  txt += `\nTeslimat: ${who.how === "eve" ? "Adrese teslim" : who.how === "eczane" ? "Eczaneden teslim alacağım" : "..."}`;
   return txt;
 }
 const waLink = text => `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
@@ -817,8 +817,8 @@ function renderSheet(){
   const body = $("#sheetBody");
   if (sent){
     body.innerHTML = `<div class="after"><h3>WhatsApp açıldı</h3>
-      <p>Siparişiniz bize ancak WhatsApp'ta <b>gönder</b> tuşuna bastığınızda ulaşır.</p>
-      <ol><li>WhatsApp'ta mesajınız yazılı duruyor.</li><li>Sağ alttaki yeşil <b>ok</b> işaretine basın.</li><li>Fiyatı ve teslim saatini size yazacağız.</li></ol>
+      <p>Siparişiniz, WhatsApp'ta <b>gönder</b> tuşuna bastığınızda bize ulaşır.</p>
+      <ol><li>Mesajınız WhatsApp'ta hazır olarak açıldı.</li><li>Sağ alttaki yeşil <b>ok</b> işaretine basın.</li><li>Fiyat ve teslimat saati size bildirilecektir.</li></ol>
       <div class="row2"><button type="button" class="primary" data-done="1">Gönderdim, listeyi temizle</button>
       <a class="ghost" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="${waLink(message())}" target="_blank" rel="noopener">WhatsApp'ı tekrar aç</a>
       <button type="button" class="ghost" data-edit="1">Listeyi düzenle</button></div></div>`;
@@ -831,20 +831,20 @@ function renderSheet(){
   const t = totals();
   let hint = "";
   if (t.known >= FREE_FROM) hint = "Teslimat ücretsiz.";
-  else if (t.known > 0) hint = `Teslimat: ${FEE} TL. ${tl(FREE_FROM - t.known)} daha eklerseniz ücretsiz. Eczaneden alırsanız ücret yok.`;
-  if (t.unknown) hint += (hint ? " " : "") + `${t.unknown} ürünün fiyatını WhatsApp'tan yazacağız.`;
+  else if (t.known > 0) hint = `Teslimat ücreti: ${FEE} TL. ${tl(FREE_FROM - t.known)} daha eklemeniz halinde teslimat ücretsizdir. Eczaneden teslim alımda ücret alınmaz.`;
+  if (t.unknown) hint += (hint ? " " : "") + `${t.unknown} ürünün fiyatı WhatsApp üzerinden bildirilecektir.`;
   body.innerHTML =
     `<p class="stepline">1 · Ürünleri kontrol edin</p>` +
-    ids.map(id => { const i = line(id), q = cart[id]; return `<div class="line"><span class="n">${i.label ? esc(i.item.name) + ` <span class="vchip">${esc(i.label)}</span>` : esc(i.name)}</span><span class="p">${i.price!=null ? tl(i.price*q) : "fiyat sorulacak"}</span>
+    ids.map(id => { const i = line(id), q = cart[id]; return `<div class="line"><span class="n">${i.label ? esc(i.item.name) + ` <span class="vchip">${esc(i.label)}</span>` : esc(i.name)}</span><span class="p">${i.price!=null ? tl(i.price*q) : "Fiyatı bildirilecek"}</span>
       <div class="ctl"><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${id}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${id}" aria-label="Bir artır">+</button></div><button type="button" class="rm" data-rm="${id}">Listeden çıkar</button></div></div>`; }).join("") +
     `<div class="totals">${t.known ? `<div class="row big"><span>Toplam</span><span>${tl(t.known)}${t.unknown ? " +" : ""}</span></div>` : ""}<p class="hint">${hint}</p></div>` +
     `<p class="stepline">2 · Size nasıl ulaşalım?</p>` +
     `<div class="field"><label class="t" for="name">Adınız <span class="opt">(isteğe bağlı)</span></label><input id="name" type="text" autocomplete="name" value="${esc(who.name)}" placeholder="Örn. Ayşe Hanım"></div>` +
     `<fieldset class="field"><legend>Semtiniz</legend><div class="choices">${AREAS.map(a => choice("area", a, a, who.area===a)).join("")}</div></fieldset>` +
-    `<fieldset class="field"><legend>Nasıl almak istersiniz?</legend><div class="choices">${choice("how","eve","Eve getirin",who.how==="eve")}${choice("how","eczane","Eczaneden alırım",who.how==="eczane")}</div></fieldset>` +
+    `<fieldset class="field"><legend>Teslimat şekli</legend><div class="choices">${choice("how","eve","Adrese teslim",who.how==="eve")}${choice("how","eczane","Eczaneden teslim alacağım",who.how==="eczane")}</div></fieldset>` +
     `<p class="stepline">3 · Gönderin</p>` +
     `<a class="primary" id="sendWa" href="${waLink(message())}" target="_blank" rel="noopener">WhatsApp ile gönder</a>` +
-    `<p class="small">Şimdi ödeme yok. Mesajınız WhatsApp'ta hazır açılır. Sadece gönder'e basın.</p>`;
+    `<p class="small">Ön ödeme alınmaz. Mesajınız WhatsApp'ta hazır olarak açılır; göndermeniz yeterlidir.</p>`;
 }
 let detailId = null, detailVar = 0;
 const isSupp = i => i.cat === "t" || /şurup|damla|jelibon|omega|probiyotik/i.test(i.name);
@@ -855,19 +855,19 @@ function renderDetail(){
   const cur = pending ? {item:i, name:i.name, label:null, price:null, img:i.vars[0].img} : line(key), q = key ? cart[key] : 0;
   const big = cur.img ? `<img class="dpic" src="img/${cur.img}.jpg" alt="${esc(cur.name)}" width="300" height="300">` : `<div class="dpic icon" aria-hidden="true">${svg(i.cat)}</div>`;
   const sizes = i.vars ? `<p class="vlabel" id="vlab">${cap(optWord(i))} seçin</p><div class="vopts" role="group" aria-labelledby="vlab">` +
-    i.vars.map((v,n) => { const inl = cart[i.id+"~"+n]; return `<button type="button" class="vopt" data-var="${n}" aria-pressed="${n===detailVar}">${n===detailVar ? "✓ " : ""}${esc(v.label)}<small>${v.price != null ? tl(v.price) : "fiyat sorulur"}${inl ? ` · ✓ listede ${inl}` : ""}</small></button>`; }).join("") + `</div>` + (pending ? `<p class="vsel need" id="vneed">Lütfen yukarıdan bir ${optWord(i)} seçin.</p>` : `<p class="vsel">Seçtiğiniz ${optWord(i)}: <b>${esc(cur.label)}</b></p>`) : "";
+    i.vars.map((v,n) => { const inl = cart[i.id+"~"+n]; return `<button type="button" class="vopt" data-var="${n}" aria-pressed="${n===detailVar}">${n===detailVar ? "✓ " : ""}${esc(v.label)}<small>${v.price != null ? tl(v.price) : "Fiyat için ulaşın"}${inl ? ` · ✓ listede ${inl}` : ""}</small></button>`; }).join("") + `</div>` + (pending ? `<p class="vsel need" id="vneed">Lütfen yukarıdan bir ${optWord(i)} seçin.</p>` : `<p class="vsel">Seçtiğiniz ${optWord(i)}: <b>${esc(cur.label)}</b></p>`) : "";
   const known = pending ? i.vars.filter(v => v.price != null).map(v => v.price) : [];
-  const price = pending ? (known.length ? `<p class="price" style="font-size:1.2em;margin:.2em 0">${known.length > 1 ? tl(Math.min(...known)) + " – " + tl(Math.max(...known)) : tl(known[0])}</p>` : `<p class="price-ask" style="font-size:1em">Fiyatını WhatsApp'tan yazarız</p>`) : cur.price != null ? `<p class="price" style="font-size:1.5em;margin:.2em 0">${tl(cur.price)}</p>` : `<p class="price-ask" style="font-size:1em">Fiyatını WhatsApp'tan yazarız</p>`;
+  const price = pending ? (known.length ? `<p class="price" style="font-size:1.2em;margin:.2em 0">${known.length > 1 ? tl(Math.min(...known)) + " – " + tl(Math.max(...known)) : tl(known[0])}</p>` : `<p class="price-ask" style="font-size:1em">Fiyat için bize ulaşın</p>`) : cur.price != null ? `<p class="price" style="font-size:1.5em;margin:.2em 0">${tl(cur.price)}</p>` : `<p class="price-ask" style="font-size:1em">Fiyat için bize ulaşın</p>`;
   const act = q
     ? `<div class="inlist"><span class="state">✓ Listenizde</span><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${key}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${key}" aria-label="Bir artır">+</button></div></div>`
     : pending ? `<button type="button" class="add need" data-need="1">Önce ${optWord(i)} seçin</button>`
     : `<button type="button" class="add" data-add="${key}">+ Listeye ekle${i.vars ? ` (${esc(i.vars[detailVar].label)})` : ""}</button>`;
   const note = isSupp(i)
     ? "Takviye edici gıdadır, ilaç değildir. Kullanım miktarı için ambalajı okuyun. Hamilelik, emzirme, hastalık veya ilaç kullanımında önce doktorunuza ya da eczacınıza danışın."
-    : "Kullanmadan önce ambalajdaki talimatları okuyun. Sorunuz olursa eczacımıza WhatsApp'tan yazabilirsiniz.";
+    : "Kullanmadan önce ambalajdaki talimatları okuyun. Sorularınız için eczacımıza WhatsApp üzerinden ulaşabilirsiniz.";
   $("#detailBody").innerHTML = big +
     `<p class="dcat">${CATS.find(c => c[0]===i.cat)[1]}</p><h3 class="dname">${esc(i.name)}</h3>${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}${sizes}${price}` +
-    `<p class="ddesc">${esc(i.desc || "Bu ürünle ilgili sorularınızı WhatsApp'tan yanıtlıyoruz.")}</p>` +
+    `<p class="ddesc">${esc(i.desc || "Bu ürünle ilgili sorularınız için WhatsApp üzerinden bize ulaşabilirsiniz.")}</p>` +
     `<div class="dact">${act}<a class="ask-btn" style="margin:0" href="${waLink(`Merhaba Hey Farmela, ${cur.name} hakkında bir sorum var: `)}" target="_blank" rel="noopener">Bu ürünü eczacımıza sorun</a></div>` +
     `<p class="dnote">${note}</p>`;
 }

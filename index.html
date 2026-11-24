@@ -29,8 +29,9 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:19px;line-height:1.5;padding-bottom:9em}
-body.big{font-size:23px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;padding-bottom:9em}
+body.big{font-size:19px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 body.locked{overflow:hidden}
 .wrap{max-width:680px;margin:0 auto;padding:0 18px}
 button{font-family:inherit;font-size:1em;color:inherit}
@@ -42,7 +43,7 @@ header{padding:1.3em 0 .4em}
 .logo{width:3.6em;height:auto;flex:0 0 3.6em}
 .kicker{margin:0;color:var(--taupe);font-weight:600;font-size:.8em;letter-spacing:.06em;text-transform:uppercase}
 .brand{font-size:1.7em;font-weight:700;margin:0;color:var(--accent);line-height:1.15}
-.tag{margin:.5em 0 0;font-size:1.05em}
+.tag{margin:.25em 0 0;font-size:1em;line-height:1.35}
 .textsize{margin-top:.8em;display:inline-flex;align-items:center;gap:.5em;min-height:2.6em;padding:0 1em;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
 .textsize[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
 .textsize .aa{font-weight:700}
@@ -197,9 +198,30 @@ fieldset{border:0;margin:0;padding:0}
 .small{color:var(--muted);font-size:.85em;margin:.6em 0 0}
 @media (prefers-reduced-motion: no-preference){.add,.cat,.primary,.choice span{transition:background-color .15s,border-color .15s,color .15s}}
 
+/* ---------- Phone: compact top so search and products show sooner ---------- */
+@media (max-width:699px){
+  header{padding:.8em 0 0}
+  .logo{width:2.9em;flex-basis:2.9em}
+  .tag{font-size:.88em;color:var(--muted)}
+  .textsize{margin-top:.6em;min-height:2.3em;padding:0 .85em;font-size:.88em}
+  .infos{display:flex;flex-wrap:wrap;gap:.35em;margin-top:.6em}
+  .info{flex:0 0 auto}
+  .info[open]{flex-basis:100%}
+  .info summary{min-height:2.4em;padding:.3em .6em;gap:.2em .45em;font-size:.86em}
+  .info:not([open]) .is{display:none}
+  .find{margin-top:1em}
+  .find h2{font-size:1.1em;margin-bottom:.35em}
+  .cats-h{margin:.8em 0 .4em;font-size:1em}
+  .cats{display:flex;flex-wrap:wrap;gap:.4em}
+  .cat,.cat.wide{flex:0 0 auto;min-height:2.5em;padding:.3em .75em;font-size:.88em;border-radius:999px}
+  .cat svg{flex-basis:1.25em;width:1.25em;height:1.25em}
+  .resbar{margin-top:1.1em}
+}
+
 /* ---------- Wider screens: phone layout above stays the default ---------- */
 @media (min-width:700px){
-  body{font-size:18px}
+  body{font-size:16px}
+  body.big{font-size:18px}
   .wrap{max-width:1180px;padding:0 28px}
   header{padding-top:1.8em}
   .infos{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
@@ -245,8 +267,7 @@ fieldset{border:0;margin:0;padding:0}
 <body>
 <div class="wrap">
   <header>
-    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><p class="kicker">Şişli · Elden teslimat</p><h1 class="brand">Hey Farmela</h1></div></div>
-    <p class="tag">Vitamin, takviye ve dermokozmetik ürünlerinizi sizin adınıza eczaneden temin ediyor, adresinize teslim ediyoruz.</p>
+    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="kicker">Şişli · Elden teslimat</p><p class="tag">Vitamin, takviye ve dermokozmetik ürünlerinizi sizin adınıza eczaneden temin ediyor, adresinize teslim ediyoruz.</p></div></div>
     <button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button>
     <div class="infos">
       <details class="info">
@@ -274,7 +295,7 @@ fieldset{border:0;margin:0;padding:0}
       <input id="q" type="search" enterkeyhint="search" placeholder="Ürün veya marka yazın" autocomplete="off">
       <button type="button" id="qclear" hidden>Sil</button>
     </div>
-    <p class="qhint">Örnek: balık yağı, multivitamin, eklem, pişik kremi. Yazım hatalarında en yakın sonuçlar gösterilir.</p>
+    <p class="qhint">Örnek: balık yağı, multivitamin, eklem, pişik kremi.</p>
     <p class="cats-h" id="cats-h">Veya bir bölüm seçin</p>
     <div class="cats" id="cats" role="group" aria-labelledby="cats-h"></div>
   </section>

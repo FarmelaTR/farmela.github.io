@@ -746,7 +746,7 @@ $("#textsize").addEventListener("click", () => { const big = !document.body.clas
 /* ---------- Catalogue ---------- */
 const svg = k => `<svg viewBox="0 0 100 100" aria-hidden="true">${ICON[k]}</svg>`;
 function renderCats(){
-  const tiles = [["pop","Çok tercih edilenler"],...CATS,["all","Tüm ürünler"]];
+  const tiles = [["pop","En sevilenler"],...CATS,["all","Tüm ürünler"]];
   $("#cats").innerHTML = tiles.map(([k,l]) => `<button class="cat${k==="all"?" wide":""}" type="button" data-cat="${k}" aria-pressed="${k===cat}">${svg(k)}<span>${l}</span></button>`).join("");
 }
 const pic = i => i.img
@@ -759,7 +759,7 @@ function card(i){
   const act = q
     ? `<div class="inlist"><span class="state">✓ Listenizde</span><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${i.id}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${i.id}" aria-label="Bir artır">+</button></div></div>`
     : `<button type="button" class="add" data-add="${i.id}">+ Listeye ekle</button>`;
-  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}<span class="more">Ürün bilgisi ›</span></span></button>${act}${miniShop(i)}</article>`;
+  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">En sevilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}<span class="more">Ürün bilgisi ›</span></span></button>${act}${miniShop(i)}</article>`;
 }
 
 /* Products with sizes: the list shows the smallest size's photo; the size is chosen on the product page */
@@ -780,7 +780,7 @@ function sizedCard(i){
   const sizes = `<span class="sizes">${cap(optWord(i))}: ${esc(sizeList(i.vars))}</span>`;
   const act = (q ? `<div class="inlist"><span class="state">✓ Listenizde (${q} adet)</span></div>` : "") +
     `<button type="button" class="add" data-open="${i.id}">${q ? "Seçenekleri gör ›" : cap(optWord(i)) + " seçin ›"}</button>`;
-  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi ve seçenekler">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}${sizes}<span class="more">Ürün bilgisi ›</span></span></button>${act}${miniShop(i)}</article>`;
+  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi ve seçenekler">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">En sevilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}${sizes}<span class="more">Ürün bilgisi ›</span></span></button>${act}${miniShop(i)}</article>`;
 }
 
 /* Typo tolerance: a word matches if it appears as written, or is one or two letters off from a word in the name or keywords */
@@ -826,7 +826,7 @@ function renderCatalog(){
   }
   else if (cat === "pop") list = list.filter(i => i.pop);
   else if (cat !== "all") list = list.filter(i => i.cat === cat);
-  const title = words.length ? `"${esc(query.trim())}" araması` : cat === "pop" ? "Çok tercih edilenler" : cat === "all" ? "Tüm ürünler" : CATS.find(c => c[0]===cat)[1];
+  const title = words.length ? `"${esc(query.trim())}" araması` : cat === "pop" ? "En sevilenler" : cat === "all" ? "Tüm ürünler" : CATS.find(c => c[0]===cat)[1];
   const showAll = words.length || cat !== "all";
   $("#resbar").innerHTML = `<h2>${title} <span class="count">${list.length} ürün</span></h2>` + (showAll ? `<button type="button" class="showall" data-reset="1">Tümünü göster</button>` : "") + (fuzzy && list.length ? `<p class="qhint" style="width:100%;margin:0">Aramanıza en yakın ürünler gösteriliyor.</p>` : "");
   let html = "";
@@ -938,7 +938,7 @@ function renderDetail(){
     ? "Takviye edici gıdadır, ilaç değildir. Kullanım miktarı için ambalajı okuyun. Hamilelik, emzirme, hastalık veya ilaç kullanımında önce doktorunuza ya da eczacınıza danışın."
     : "Kullanmadan önce ambalajdaki talimatları okuyun. Sorularınız için eczacıya WhatsApp üzerinden ulaşabilirsiniz.";
   $("#detailBody").innerHTML = big +
-    `<p class="dcat">${CATS.find(c => c[0]===i.cat)[1]}</p><h3 class="dname">${esc(i.name)}</h3>${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}${sizes}${price}` +
+    `<p class="dcat">${CATS.find(c => c[0]===i.cat)[1]}</p><h3 class="dname">${esc(i.name)}</h3>${i.pop ? '<span class="badge">En sevilen</span>' : ""}${sizes}${price}` +
     `<p class="ddesc">${esc(i.desc || "Bu ürünle ilgili sorularınız için WhatsApp üzerinden bize ulaşabilirsiniz.")}</p>` +
     `<div class="dact">${act}${shopHtml(i, cur, pending)}<a class="ask-btn" style="margin:0" href="${waLink(`Merhaba Hey Farmela, ${cur.name} hakkında bir sorum var: `)}" target="_blank" rel="noopener">Bu ürünü eczacıya sorun</a></div>` +
     `<p class="dnote">${note}</p>`;

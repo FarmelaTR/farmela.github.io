@@ -71,13 +71,13 @@ header{padding:1.3em 0 .4em}
 
 /* Find */
 .find{margin-top:1.6em}
-.find h2,.cats-h{font-size:1.25em;color:var(--accent);margin:0 0 .5em;font-weight:600}
+.find h2{font-size:1.25em;color:var(--accent);margin:0 0 .5em;font-weight:600}
 .search{position:relative}
 #q{width:100%;font:inherit;font-size:1.05em;padding:.75em 3em .75em .85em;border-radius:.75em;border:2px solid var(--taupe);background:var(--surface);color:var(--ink)}
 #q:focus{outline:none;border-color:var(--accent)}
 #qclear{position:absolute;right:.3em;top:50%;transform:translateY(-50%);min-width:2.6em;height:2.6em;border:0;border-radius:.6em;background:var(--accent-soft);color:var(--ink);font-weight:600;cursor:pointer;padding:0 .6em}
 .qhint{margin:.35em 0 0;color:var(--muted);font-size:.85em}
-.cats-h{margin-top:1.2em}
+.cats{margin-top:1em}
 .cats{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
 .cat{display:flex;align-items:center;gap:.55em;min-height:3.2em;padding:.5em .7em;border-radius:.8em;border:2px solid var(--line);background:var(--surface);text-align:left;font-weight:600;font-size:.92em;cursor:pointer;line-height:1.2}
 .cat svg{flex:0 0 1.6em;width:1.6em;height:1.6em;fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
@@ -211,8 +211,7 @@ fieldset{border:0;margin:0;padding:0}
   .info:not([open]) .is{display:none}
   .find{margin-top:1em}
   .find h2{font-size:1.1em;margin-bottom:.35em}
-  .cats-h{margin:.8em 0 .4em;font-size:1em}
-  .cats{display:flex;flex-wrap:wrap;gap:.4em}
+  .cats{display:flex;flex-wrap:wrap;gap:.4em;margin-top:.7em}
   .cat,.cat.wide{flex:0 0 auto;min-height:2.5em;padding:.3em .75em;font-size:.88em;border-radius:999px}
   .cat svg{flex-basis:1.25em;width:1.25em;height:1.25em}
   .resbar{margin-top:1.1em}
@@ -267,7 +266,7 @@ fieldset{border:0;margin:0;padding:0}
 <body>
 <div class="wrap">
   <header>
-    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="kicker">Şişli · Elden teslimat</p><p class="tag">Vitamin, takviye ve dermokozmetik ürünlerinizi sizin adınıza eczaneden temin ediyor, adresinize teslim ediyoruz.</p></div></div>
+    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="tag">Vitamin, takviye ve dermokozmetik ürünlerinizi sizin adınıza eczaneden temin ediyor, adresinize teslim ediyoruz.</p></div></div>
     <button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button>
     <div class="infos">
       <details class="info">
@@ -296,8 +295,7 @@ fieldset{border:0;margin:0;padding:0}
       <button type="button" id="qclear" hidden>Sil</button>
     </div>
     <p class="qhint">Örnek: balık yağı, multivitamin, eklem, pişik kremi.</p>
-    <p class="cats-h" id="cats-h">Veya bir bölüm seçin</p>
-    <div class="cats" id="cats" role="group" aria-labelledby="cats-h"></div>
+    <div class="cats" id="cats" role="group" aria-label="Ürün bölümleri"></div>
   </section>
 
   <div class="resbar" id="resbar"></div>

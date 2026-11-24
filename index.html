@@ -44,7 +44,10 @@ header{padding:1.3em 0 .4em}
 .kicker{margin:0;color:var(--taupe);font-weight:600;font-size:.8em;letter-spacing:.06em;text-transform:uppercase}
 .brand{font-size:1.7em;font-weight:700;margin:0;color:var(--accent);line-height:1.15}
 .tag{margin:.25em 0 0;font-size:1em;line-height:1.35}
-.textsize{margin-top:.8em;display:inline-flex;align-items:center;gap:.5em;min-height:2.6em;padding:0 1em;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
+.promo{display:inline-flex;align-items:center;gap:.4em;margin:0;white-space:nowrap;vertical-align:middle;padding:.12em .7em .12em .14em;border-radius:999px;background:linear-gradient(90deg,var(--accent),#3a3aa8);color:#fff;font-weight:700;font-size:.74em;line-height:1.3;box-shadow:0 2px 8px rgba(29,29,117,.22)}
+.promo .pct{background:#f2c14e;color:#1d1d75;border-radius:999px;padding:.05em .5em;font-weight:800;letter-spacing:.01em}
+.tools{display:flex;align-items:center;flex-wrap:wrap;gap:.4em .35em;margin-top:.8em}
+.textsize{margin:0;display:inline-flex;align-items:center;gap:.5em;min-height:2.6em;padding:0 1em;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
 .textsize[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
 .textsize .aa{font-weight:700}
 
@@ -180,8 +183,9 @@ footer a{color:var(--accent)}
 .field label.t,.field legend{display:block;font-weight:600;margin-bottom:.35em;padding:0}
 .field .opt{color:var(--muted);font-weight:400}
 fieldset{border:0;margin:0;padding:0}
-#name{width:100%;font:inherit;padding:.7em .85em;border-radius:.7em;border:2px solid var(--taupe);background:var(--surface);color:var(--ink)}
-#name:focus{outline:none;border-color:var(--accent)}
+#name,#address{width:100%;font:inherit;padding:.7em .85em;border-radius:.7em;border:2px solid var(--taupe);background:var(--surface);color:var(--ink)}
+#address{resize:vertical;line-height:1.4}
+#name:focus,#address:focus{outline:none;border-color:var(--accent)}
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
 .choice{position:relative}
 .choice input{position:absolute;opacity:0;width:1px;height:1px}
@@ -203,7 +207,8 @@ fieldset{border:0;margin:0;padding:0}
   header{padding:.8em 0 0}
   .logo{width:2.9em;flex-basis:2.9em}
   .tag{font-size:.88em;color:var(--muted)}
-  .textsize{margin-top:.6em;min-height:2.3em;padding:0 .85em;font-size:.88em}
+  .tools{margin-top:.6em}
+  .textsize{min-height:2.3em;padding:0 .85em;font-size:.88em}
   .infos{display:flex;flex-wrap:wrap;gap:.35em;margin-top:.6em}
   .info{flex:0 0 auto}
   .info[open]{flex-basis:100%}
@@ -221,6 +226,7 @@ fieldset{border:0;margin:0;padding:0}
 @media (min-width:700px){
   body{font-size:16px}
   body.big{font-size:18px}
+  .promo{font-size:.88em;padding:.2em .85em .2em .2em}
   .wrap{max-width:1180px;padding:0 28px}
   header{padding-top:1.8em}
   .infos{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
@@ -267,7 +273,7 @@ fieldset{border:0;margin:0;padding:0}
 <div class="wrap">
   <header>
     <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><h1 class="sr-only">Hey Farmela</h1><p class="tag">Vitamin, takviye ve dermokozmetik ürünlerinizi sizin adınıza eczaneden temin ediyor, adresinize teslim ediyoruz.</p></div></div>
-    <button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button>
+    <div class="tools"><button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button><p class="promo"><span class="pct">%10</span><span>3. siparişte sepette indirim</span></p></div>
     <div class="infos">
       <details class="info">
         <summary><span class="it">Nasıl sipariş verilir?</span><span class="is">3 kısa adım</span></summary>
@@ -593,7 +599,6 @@ function shopHtml(i, cur, pending){
 const miniShop = i => { if (i.vars) return ""; const u = shopUrl(i.img, i.name); return u ? `<a class="shop-mini" href="${u}" target="_blank" rel="noopener">Kartla online satın al ›</a>` : ""; };
 const CATS = [["t","Vitamin & Takviye"],["c","Cilt Bakımı"],["a","Anne & Çocuk"],["k","Kişisel Bakım"],["s","Hazır Setler"]];
 const FREE_FROM = 900, FEE = 150;
-const AREAS = ["Nişantaşı","Bomonti","Kurtuluş","Başka semt"];
 const ICON = {
   pop:'<path d="M50 12l11 24 26 3-19 18 5 26-23-13-23 13 5-26-19-18 26-3Z"/>',
   all:'<rect x="14" y="14" width="30" height="30" rx="6"/><rect x="56" y="14" width="30" height="30" rx="6"/><rect x="14" y="56" width="30" height="30" rx="6"/><rect x="56" y="56" width="30" height="30" rx="6"/>',
@@ -729,7 +734,7 @@ let cart = store.get("heyfarmela-liste", {});
  ["Supradyn Energy Focus (30 film kaplı tablet)", "Supradyn Focus (30 film kaplı tablet)", null],["Supradyn Focus", "Supradyn Focus (30 film kaplı tablet)", null],["Kartix Glucosamine Complex, 90 kapsül", "Kartix Glucosamine Complex (90 kapsül)", null],["Ocuvite Complete, 60 tablet", "Ocuvite Complete (60 tablet)", null],["Orzax Ocean Daily One Energy, 30 tablet", "Orzax Ocean Daily One Energy (30 tablet)", null],["Redoxon C Vitamini, 30 efervesan tablet", "Redoxon C Vitamini (15 efervesan tablet)", null],["Cosakondrin Plus, 60 tablet", "Cosakondrin Plus (60 tablet)", null],["Orzax Ocean Vitamin D3K2 Damla, 20 ml", "Orzax Ocean Vitamin D3K2 Damla (20 ml)", null],["Orzax Ocean Polysitol, 30 saşe", "Orzax Ocean Polysitol (30 saşe)", null],["Orzax Ocean Passiflora 300 mg, 30 kapsül", "Orzax Ocean Passiflora 300 mg (30 kapsül)", null],["New Life Mag4 Day & Night, 30+30 tablet", "New Life Mag4 Day & Night (30+30 tablet)", null],["New Life B12 Plus, 60 tablet", "New Life B12 Plus (60 tablet)", null],["New Life EFA S-1200 Omega 3, 45 kapsül", "New Life EFA S-1200 Omega 3 (45 kapsül)", null],["New Life 4 Hepa, 30 kapsül", "New Life 4 Hepa (30 kapsül)", null],["Solgar Vitamin D3 1000 IU, 100 kapsül", "Solgar Vitamin D3 1000 IU (100 kapsül)", null],["Solgar Magnesium Citrate, 60 tablet", "Solgar Magnesium Citrate (60 tablet)", null],["Nutraxin Vitamin Max C-D-Zinc, 60 tablet", "Nutraxin Vitamin Max C-D-Zinc (60 tablet)", null],["Nutraxin Quercetin Bromelain, 30 tablet", "Nutraxin Quercetin Bromelain (30 tablet)", null],["İmuneks Beta-Glukan 10 mg, 40 kapsül", "İmuneks Beta-Glukan 10 mg (40 kapsül)", null],["İmuneks Plus Beta-Glukan ve C Vitamini, 30 kapsül", "İmuneks Plus Beta-Glukan ve C Vitamini (30 kapsül)", null],["İmuneks İnflamax Zerdeçal, 60 kapsül", "İmuneks İnflamax Zerdeçal (60 kapsül)", null],["VitaGlucan+ Beta-Glukan, C Vitamini, Çinko, 30 tablet", "VitaGlucan+ Beta-Glukan, C Vitamini, Çinko (30 tablet)", null],["Youplus Vitamin C 1000 mg, Çinko, Propolis, 20 efervesan tablet", "Youplus Vitamin C 1000 mg, Çinko, Propolis (20 efervesan tablet)", null],["Suda Collagen Multiform, 90 tablet", "Suda Collagen Multiform (90 tablet)", null],["Collagen Forte, 90 tablet", "Collagen Forte Premium 1500 mg (90 tablet)", null],["Medohbiotin, 60 tablet", "Medohbiotin (60 tablet)", null],["Supradyn Energy Focus, 30 film kaplı tablet", "Supradyn Energy Focus (30 film kaplı tablet)", null],["EasyFishoil, 30 kapsül", "EasyFishoil Omega-3 (30 çiğnenebilir jel tablet)", null],["Sambucol Plus, 15 efervesan tablet", "Sambucol Plus (15 efervesan tablet)", null],["Orzax Bigflor Probiyotik, 10 saşe", "Orzax Bigflor Probiyotik (10 saşe)", null],["Denflor Probiyotik, 10 saşe", "Denflor Probiyotik (10 saşe)", null],["BST Art-Max, 90 tablet", "BST Art-Max (90 tablet)", null],["Vitafenix Serenita, 60 kapsül", "Vitafenix Serenita (60 kapsül)", null],["Vitafenix Angard, 20 kapsül", "Vitafenix Angard (20 kapsül)", null],["Vitafenix Cognifenix, 40 kapsül", "Vitafenix Cognifenix (40 kapsül)", null],["Vitafenix Magna P, 60 kapsül", "Vitafenix Magna P (60 kapsül)", null],["La Roche-Posay Effaclar Temizleme Jeli, 400 ml", "La Roche-Posay Effaclar Temizleme Jeli (400 ml)", null],["La Roche-Posay Cicaplast Baume B5, 40 ml", "La Roche-Posay Cicaplast Baume B5 (40 ml)", null],["La Roche-Posay Anthelios UVmune 400 SPF 50+, 50 ml", "La Roche-Posay Anthelios UVmune 400 SPF 50+ (50 ml)", null],["La Roche-Posay Hyalu B5 Serum, 30 ml", "La Roche-Posay Hyalu B5 Serum (30 ml)", null],["La Roche-Posay Lipikar Baume AP+M, 400 ml", "La Roche-Posay Lipikar Baume AP+M (400 ml)", null],["Bioderma Atoderm Cream Ultra, 200 ml", "Bioderma Atoderm Cream Ultra (200 ml)", null],["Bioderma Photoderm Creme SPF 50+, 40 ml", "Bioderma Photoderm Creme SPF 50+ (40 ml)", null],["Bioderma Sebium Hydra Nemlendirici, 40 ml", "Bioderma Sebium Hydra Nemlendirici (40 ml)", null],["Bioderma Sensibio Foaming Gel, 500 ml", "Bioderma Sensibio Foaming Gel (500 ml)", null],["Bioderma Sebium Foaming Gel, 500 ml", "Bioderma Sebium Foaming Gel (400 ml)", null],["Bioderma Sensibio H2O Misel Su, 500 ml", "Bioderma Sensibio H2O Misel Su (500 ml)", null],["CeraVe Nemlendirici Krem, 340 g", "CeraVe Nemlendirici Krem (340 g)", null],["CeraVe Köpüren Temizleyici, 236 ml", "CeraVe Köpüren Temizleyici (236 ml)", null],["Avène Termal Su, 300 ml", "Avène Termal Su (300 ml)", null],["Avène Cicalfate+ Onarıcı Krem, 40 ml", "Avène Cicalfate+ Onarıcı Krem (40 ml)", null],["Vichy Minéral 89 Serum, 50 ml", "Vichy Minéral 89 Serum (50 ml)", null],["Eucerin Hyaluron-Filler Gündüz Kremi SPF 15, 50 ml", "Eucerin Hyaluron-Filler Gündüz Kremi SPF 15 (50 ml)", null],["Caudalie Vinoperfect Serum, 30 ml", "Caudalie Vinoperfect Serum (30 ml)", null],["Solante Antiox SPF 50+ Güneş Losyonu, 150 ml", "Solante Antiox SPF 50+ Güneş Losyonu (150 ml)", null],["Solante Acnes SPF 50 Güneş Losyonu, 150 ml", "Solante Acnes SPF 50 Güneş Losyonu (150 ml)", null],["Bio-Oil, 125 ml", "Bio-Oil (125 ml)", null],["Sterimar Burun Spreyi, 100 ml", "Sterimar Burun Spreyi (100 ml)", null],["Gifrer Serum Fizyolojik, 40 flakon x 5 ml", "Gifrer Serum Fizyolojik (20 flakon x 5 ml)", null],["Undo Talk Pudra, 100 g", "Undo Talk Pudra (100 g)", null],["Nutrigen Üzüm Pediatrik Şurup, 200 ml", "Nutrigen Üzüm Pediatrik Şurup (200 ml)", null],["Multi Jelly Jelibon, 20 g", "Multi Jelly Jelibon (20 g)", null],["Hyper Immun 44 Şurup, 150 ml", "Hyper Immun 44 Şurup (150 ml)", null],["Orzax Ocean Multi Ballı Şurup, 150 ml", "Orzax Ocean Multi Ballı Şurup (150 ml)", null],["Argivit Focus Şurup, 150 ml", "Argivit Focus Şurup (150 ml)", null],["Orzax Ocean Microfer Damla, 30 ml", "Orzax Ocean Microfer Damla (30 ml)", null],["Orzax İmunol Şurup, 150 ml", "Orzax İmunol Şurup (150 ml)", null],["Imumax Baby & Kids Boğaz Spreyi 3+ yaş, 20 ml", "Imumax Baby & Kids Boğaz Spreyi 3+ yaş (20 ml)", null],["iMom Omega 3, 30 kapsül", "iMom Omega 3 (30 kapsül)", null],["Mustela Çatlak Önleyici Yağ, 105 ml", "Mustela Çatlak Önleyici Yağ (105 ml)", null],["Curaprox Kids Ultra Soft Diş Fırçası, 4-12 yaş, 1 adet", "Curaprox Kids Ultra Soft Diş Fırçası, 4-12 yaş (1 adet)", null],["Oral-B Junior Diş Fırçası, 6-12 yaş, ekstra yumuşak, 1 adet", "Oral-B Junior Diş Fırçası, 6-12 yaş, ekstra yumuşak (1 adet)", null],["R.O.C.S. Kids Florürsüz Çocuk Diş Macunu, 3-7 yaş, 45 g", "R.O.C.S. Kids Florürsüz Çocuk Diş Macunu, 3-7 yaş (45 g)", null],["Corega Süper Naneli Protez Yapıştırıcı Krem, 40 g", "Corega Süper Naneli Protez Yapıştırıcı Krem (40 g)", null],["Corega 3 Dakikada Temizleyici, 30 tablet", "Corega 3 Dakikada Temizleyici (30 tablet)", null],["Sebamed İntim Jel, 200 ml", "Sebamed İntim Jel (200 ml)", null],["Phytorelief CC Pastil, 12 adet", "Phytorelief CC Pastil (12 adet)", null],["Bepanthol Derma Merhem, 30 g", "Bepanthol Derma Merhem (30 g)", null],["Bepanthol Cilt Bakım Kremi, 30 g", "Bepanthol Cilt Bakım Kremi (30 g)", null],["Bepanthol Anti-Scar Jel, 20 g", "Bepanthol Anti-Scar Jel (20 g)", null],["Meditech Arnica Jel, 75 g", "Meditech Arnica Jel (75 g)", null],["Hametol Onarıcı Bakım Kremi, 30 g", "Hametol Onarıcı Bakım Kremi (30 g)", null],["Marvis Jasmin Mint Diş Macunu, 25 ml", "Marvis Jasmin Mint Diş Macunu (25 ml)", null],["Signal White Now Beyazlatıcı Diş Macunu, 75 ml", "Signal White Now Beyazlatıcı Diş Macunu (75 ml)", null],["R.O.C.S. Coffee & Tobacco Diş Macunu, 74 g", "R.O.C.S. Coffee & Tobacco Diş Macunu (74 g)", null],["Oral-B Essential Floss Naneli Diş İpi, 50 m", "Oral-B Essential Floss Naneli Diş İpi (50 m)", null],["TePe Arayüz Fırçası 0,8 mm (Size 5), 8'li", "TePe Arayüz Fırçası 0,8 mm (Size 5) (8'li)", null],["Oral-B Pro-Expert Arayüz Fırçası Başlangıç Kiti, 1 set", "Oral-B Pro-Expert Arayüz Fırçası Başlangıç Kiti (1 set)", null],["Roll Bant Topuk Bandı, 4 adet", "Roll Bant Topuk Bandı (4 adet)", null],["Tuba Salisilik Asitli Nasır Bandı, 6 adet", "Tuba Salisilik Asitli Nasır Bandı (6 adet)", null],["B-Good Dijital Ateş Ölçer, 1 adet", "B-Good Dijital Ateş Ölçer (1 adet)", null],["Art de Huile Fly Mix Vücut Spreyi, 120 ml", "Art de Huile Fly Mix Vücut Spreyi (120 ml)", null]
 ].forEach(([o,n,v]) => { const ok = idOf(o), nk = idOf(n) + (v == null ? "" : "~"+v); if (cart[ok]) { cart[nk] = (cart[nk]||0) + cart[ok]; delete cart[ok]; } });
 Object.keys(cart).forEach(k => { if (!line(k)) delete cart[k]; });
-let who = store.get("heyfarmela-kisi", {name:"",area:"",how:""});
+let who = Object.assign({name:"",address:"",how:""}, store.get("heyfarmela-kisi", {}));
 let cat = "all", query = "", sent = false;
 
 /* ---------- Text size ---------- */
@@ -872,8 +877,8 @@ function message(){
   let txt = "Merhaba Hey Farmela, ön sipariş vermek istiyorum:\n" + lines.join("\n");
   if (t.known) txt += `\n\nFiyatı belli olanların toplamı: ${tl(t.known)}`;
   txt += `\n\nAdım: ${who.name.trim() || "..."}`;
-  txt += `\nSemt: ${who.area || "..."}`;
   txt += `\nTeslimat: ${who.how === "eve" ? "Adrese teslim" : who.how === "eczane" ? "Eczaneden teslim alacağım" : "..."}`;
+  if (who.how !== "eczane") txt += `\nAdres: ${(who.address || "").trim() || "..."}`;
   return txt;
 }
 const waLink = text => `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
@@ -906,8 +911,8 @@ function renderSheet(){
     `<div class="totals">${t.known ? `<div class="row big"><span>Toplam</span><span>${tl(t.known)}${t.unknown ? " +" : ""}</span></div>` : ""}<p class="hint">${hint}</p></div>` +
     `<p class="stepline">2 · Size nasıl ulaşalım?</p>` +
     `<div class="field"><label class="t" for="name">Adınız <span class="opt">(isteğe bağlı)</span></label><input id="name" type="text" autocomplete="name" value="${esc(who.name)}" placeholder="Örn. Ayşe Hanım"></div>` +
-    `<fieldset class="field"><legend>Semtiniz</legend><div class="choices">${AREAS.map(a => choice("area", a, a, who.area===a)).join("")}</div></fieldset>` +
     `<fieldset class="field"><legend>Teslimat şekli</legend><div class="choices">${choice("how","eve","Adrese teslim",who.how==="eve")}${choice("how","eczane","Eczaneden teslim alacağım",who.how==="eczane")}</div></fieldset>` +
+    `<div class="field" id="addrField"${who.how==="eczane" ? " hidden" : ""}><label class="t" for="address">Adresiniz</label><textarea id="address" rows="3" autocomplete="street-address" placeholder="Mahalle, sokak, bina ve daire no">${esc(who.address)}</textarea></div>` +
     `<p class="stepline">3 · Gönderin</p>` +
     `<a class="primary" id="sendWa" href="${waLink(message())}" target="_blank" rel="noopener">WhatsApp ile gönder</a>` +
     `<p class="small">Mesajınız WhatsApp'ta hazır olarak açılır; göndermeniz yeterlidir.</p>`;
@@ -974,11 +979,11 @@ window.addEventListener("hashchange", () => {
 $("#openSheet").addEventListener("click", openSheet);
 $("#closeSheet").addEventListener("click", () => closeSheet(false));
 
-/* Keep name/area/choice and the WhatsApp text in step as the person fills the form */
+/* Keep name/address/choice and the WhatsApp text in step as the person fills the form */
 $("#sheetBody").addEventListener("input", e => {
   if (e.target.id === "name") who.name = e.target.value;
-  if (e.target.name === "area") who.area = e.target.value;
-  if (e.target.name === "how") who.how = e.target.value;
+  if (e.target.id === "address") who.address = e.target.value;
+  if (e.target.name === "how") { who.how = e.target.value; const f = $("#addrField"); if (f) f.hidden = who.how === "eczane"; }
   store.set("heyfarmela-kisi", who);
   const a = $("#sendWa"); if (a) a.href = waLink(message());
 });

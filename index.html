@@ -68,6 +68,8 @@ header{padding:1.3em 0 .4em}
 .is{color:var(--muted);font-weight:500;font-size:.88em}
 .ib{padding:0 .9em .9em}
 .ib p{margin:0 0 .35em}
+.ib .ih{margin:.6em 0 .2em;font-weight:700;color:var(--accent)}
+.ib .ih:first-child{margin-top:0}
 .ib a{color:var(--accent);font-weight:600}
 .info .steps{margin:0;padding:0 .9em .9em}
 .steps{list-style:none;margin:1em 0 0;padding:0;display:grid;gap:.5em}
@@ -237,7 +239,7 @@ fieldset{border:0;margin:0;padding:0}
   .promo{font-size:.88em;padding:.2em .85em .2em .2em}
   .wrap{max-width:1180px;padding:0 28px}
   header{padding-top:1.8em}
-  .infos{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
+  .infos{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
   .info .steps{grid-template-columns:1fr}
   .note{display:grid;grid-template-columns:1fr 1fr;gap:.4em 1.5em}
   .note p+p{margin-top:0}
@@ -292,12 +294,8 @@ fieldset{border:0;margin:0;padding:0}
         </ol>
       </details>
       <details class="info">
-        <summary><span class="it">Ödeme</span><span class="is">Nakit, kredi kartı veya havale</span></summary>
-        <div class="ib"><p>Ödeme, sipariş onayından sonra nakit, kredi kartı veya havale ile yapılır.</p><p>Kredi kartıyla hemen ödemek isterseniz ürünleri <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a> üzerinden satın alabilirsiniz.</p></div>
-      </details>
-      <details class="info">
-        <summary><span class="it">Teslimat</span><span class="is">900 TL ve üzeri ücretsiz</span></summary>
-        <div class="ib"><p>Nişantaşı, Bomonti ve Kurtuluş bölgelerine teslimat yapılır.</p><p>900 TL ve üzeri siparişlerde teslimat ücretsizdir.</p><p>900 TL altı siparişlerde teslimat ücreti 150 TL'dir.</p><p>Siparişinizi eczaneden de teslim alabilirsiniz.</p></div>
+        <summary><span class="it">Ödeme &amp; Teslimat</span><span class="is">900 TL ve üzeri teslimat ücretsiz</span></summary>
+        <div class="ib"><p class="ih">Ödeme</p><p>Ödeme, sipariş onayından sonra nakit, kredi kartı veya havale ile yapılır.</p><p>Kredi kartıyla hemen ödemek isterseniz ürünleri <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a> üzerinden satın alabilirsiniz.</p><p class="ih">Teslimat</p><p>Nişantaşı, Bomonti ve Kurtuluş bölgelerine teslimat yapılır.</p><p>900 TL ve üzeri siparişlerde teslimat ücretsizdir.</p><p>900 TL altı siparişlerde teslimat ücreti 150 TL'dir.</p><p>Siparişinizi eczaneden de teslim alabilirsiniz.</p></div>
       </details>
     </div>
   </header>

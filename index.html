@@ -259,7 +259,7 @@ fieldset{border:0;margin:0;padding:0}
       </details>
       <details class="info">
         <summary><span class="it">Ödeme</span><span class="is">Nakit, kredi kartı veya havale</span></summary>
-        <div class="ib"><p>Ön ödeme alınmaz. Ödeme, sipariş onayından sonra nakit, kredi kartı veya havale ile yapılır.</p><p>Kredi kartıyla hemen ödemek isterseniz ürünleri <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a> üzerinden satın alabilirsiniz.</p></div>
+        <div class="ib"><p>Ödeme, sipariş onayından sonra nakit, kredi kartı veya havale ile yapılır.</p><p>Kredi kartıyla hemen ödemek isterseniz ürünleri <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a> üzerinden satın alabilirsiniz.</p></div>
       </details>
       <details class="info">
         <summary><span class="it">Teslimat</span><span class="is">900 TL ve üzeri ücretsiz</span></summary>
@@ -891,7 +891,7 @@ function renderSheet(){
     `<fieldset class="field"><legend>Teslimat şekli</legend><div class="choices">${choice("how","eve","Adrese teslim",who.how==="eve")}${choice("how","eczane","Eczaneden teslim alacağım",who.how==="eczane")}</div></fieldset>` +
     `<p class="stepline">3 · Gönderin</p>` +
     `<a class="primary" id="sendWa" href="${waLink(message())}" target="_blank" rel="noopener">WhatsApp ile gönder</a>` +
-    `<p class="small">Ön ödeme alınmaz. Mesajınız WhatsApp'ta hazır olarak açılır; göndermeniz yeterlidir.</p>`;
+    `<p class="small">Mesajınız WhatsApp'ta hazır olarak açılır; göndermeniz yeterlidir.</p>`;
 }
 let detailId = null, detailVar = 0;
 const isSupp = i => i.cat === "t" || /şurup|damla|jelibon|omega|probiyotik/i.test(i.name);

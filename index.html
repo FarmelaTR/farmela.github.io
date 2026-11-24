@@ -258,7 +258,7 @@ fieldset{border:0;margin:0;padding:0}
   #sheet .wrap{max-width:540px;margin:0 0 0 auto;min-height:100%;background:var(--bg);padding:0 1.6em 2em;box-shadow:-12px 0 40px rgba(0,0,0,.2)}
 }
 @media (min-width:1000px){
-  .cats{grid-template-columns:repeat(7,1fr)}
+  .cats{grid-template-columns:repeat(6,1fr)}
   .cat{flex-direction:column;align-items:flex-start;justify-content:center;gap:.4em;min-height:4.6em}
   .list{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9em}
   .card .top{flex-direction:column;align-items:stretch;gap:.6em}
@@ -746,7 +746,7 @@ $("#textsize").addEventListener("click", () => { const big = !document.body.clas
 /* ---------- Catalogue ---------- */
 const svg = k => `<svg viewBox="0 0 100 100" aria-hidden="true">${ICON[k]}</svg>`;
 function renderCats(){
-  const tiles = [["pop","En sevilenler"],...CATS,["all","Tüm ürünler"]];
+  const tiles = [["pop","En sevilenler"],...CATS.filter(c => c[0] !== "s"),["all","Tüm ürünler"]];
   $("#cats").innerHTML = tiles.map(([k,l]) => `<button class="cat${k==="all"?" wide":""}" type="button" data-cat="${k}" aria-pressed="${k===cat}">${svg(k)}<span>${l}</span></button>`).join("");
 }
 const pic = i => i.img

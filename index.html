@@ -616,7 +616,7 @@ const ICON = {
 };
 
 // Everyday words people type, mapped onto product names (search forgives the wording)
-const SYN = [[/omega|fish|easyfish|moller/,"balik yagi"],[/d3|vitamin d/,"d vitamini"],[/spf|photoderm|anthelios|solante/,"gunes kremi koruyucu"],[/mag/,"magnezyum"],[/redoxon|c vitamini|vitamin c|max c/,"c vitamini"],[/zinc|cinko/,"cinko"],[/collagen|kolajen/,"kolajen"],[/probiyotik|flor/,"probiyotik bagirsak"],[/dis |fircasi|macun|floss|interdental|tepe|curaprox|marvis|signal|r o c s/,"dis agiz"],[/corega/,"protez"],[/bepanthol|sudocrem/,"pisik krem"],[/glucosamine|cosakondrin|art max|kartix|osteocare/,"eklem kemik"],[/biotin|medohbiotin/,"sac tirnak"],[/b12|methylcobalamin/,"b12 vitamini"],[/cerave|atoderm|lipikar|nemlendirici/,"nemlendirici krem"],[/temizle|foaming|h2o|misel/,"yuz temizleme"],[/sterimar|serum fizyolojik/,"burun"],[/sirup|damla/,"cocuk"]];
+const SYN = [[/omega|fish|easyfish|moller/,"balik yagi"],[/d3|vitamin d/,"d vitamini"],[/spf|photoderm|anthelios|solante/,"gunes kremi koruyucu"],[/mag/,"magnezyum"],[/redoxon|c vitamini|vitamin c|max c/,"c vitamini"],[/zinc|cinko/,"cinko"],[/collagen|kolajen/,"kolajen"],[/probiyotik|bigflor|denflor/,"probiyotik bagirsak"],[/dis |fircasi|macun|floss|interdental|tepe|curaprox|marvis|signal|r o c s/,"dis agiz"],[/corega/,"protez"],[/bepanthol|sudocrem/,"pisik krem"],[/glucosamine|cosakondrin|art max|kartix|osteocare/,"eklem kemik"],[/biotin|medohbiotin/,"sac tirnak"],[/b12|methylcobalamin/,"b12 vitamini"],[/cerave|atoderm|lipikar|nemlendirici/,"nemlendirici krem"],[/temizleme jeli|foaming|h2o|misel|kopuren temizleyici/,"yuz temizleme"],[/sterimar|serum fizyolojik/,"burun"],[/sirup|damla/,"cocuk"]];
 
 
 // ---- Search keywords: [pattern in product name, words people may type]. Add freely; Turkish letters are fine.
@@ -671,7 +671,7 @@ const KW = [
  [/imom/,"hamilelik emzirme omega3"],
  [/curaprox|oral b junior/,"çocuk diş fırçası"],
  [/kids florursuz/,"çocuk diş macunu"],
- [/corega super/,"protez yapıştırıcı takma diş"],
+ [/corega super/,"protez yapıştırıcı takma diş yaşlı"],
  [/corega 3/,"protez temizleme takma diş"],
  [/intim/,"genital hijyen kadın"],
  [/phytorelief/,"boğaz pastil öksürük ses"],
@@ -697,7 +697,7 @@ const KW = [
  [/hametol/,"kuru cilt onarıcı krem hamamelis"],
  [/betain/,"sindirim mide asidi hazımsızlık pepsin"],
  [/pharmaton/,"multivitamin enerji yorgunluk ginseng"],
- [/pharmaton 50/,"50 yaş üstü omega3"]
+ [/pharmaton 50/,"50 yaş üstü yaşlı omega3"]
 ];
 const norm = s => s.toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ");
 const idOf = s => norm(s).trim().replace(/\s+/g,"-");
@@ -708,7 +708,7 @@ const items = DATA.map(([name,cat,price,pop,img,sizes]) => {
   const key = (k+" "+extra+" "+norm(CATS.find(c=>c[0]===cat)[1])).replace(/\s+/g," ");
   const desc = DESC[name] || "";
   const fullKey = key + " " + norm(desc);
-  return {id:idOf(name),name,cat,price,pop:!!pop,img,vars,desc,key:fullKey,tokens:[...new Set(fullKey.split(" ").filter(Boolean))]};
+  return {id:idOf(name),name,cat,price,pop:!!pop,img,vars,desc,key:fullKey,nameKey:key,wkey:" "+fullKey,tokens:[...new Set(fullKey.split(" ").filter(Boolean))]};
 });
 const byId = Object.fromEntries(items.map(i => [i.id,i]));
 /* A list entry is "product-id" or, for products with sizes, "product-id~sizeIndex" */
@@ -788,6 +788,14 @@ function sizedCard(i){
   return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi ve seçenekler">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">En sevilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}${sizes}<span class="more">Ürün bilgisi ›</span></span></button>${act}${miniShop(i)}</article>`;
 }
 
+/* A word is found in a product when: short words (3 letters or less) are a whole word, or a word plus one letter ("izi", "yağı");
+   longer words start a word anywhere (name or description); words of 5+ letters may also sit inside a name word ("multivitamin"). */
+function hit(item, w){
+  if (w.includes(" ")) return item.wkey.includes(" " + w);
+  if (w.length <= 3) return item.tokens.some(t => t === w || (t.startsWith(w) && (t.length === w.length + 1 || /\d/.test(w))));
+  if (w.length >= 5 && item.nameKey.includes(w)) return true;
+  return item.wkey.includes(" " + w);
+}
 /* Typo tolerance: a word matches if it appears as written, or is one or two letters off from a word in the name or keywords */
 function dist(a,b){
   const m=a.length,n=b.length; if (Math.abs(m-n)>2) return 9;
@@ -799,7 +807,7 @@ function dist(a,b){
   return d[m][n];
 }
 function wordScore(item, w){
-  if (item.key.includes(w)) return 2;
+  if (hit(item, w)) return 2;
   if (w.length < 4) return 0;
   const lim = w.length >= 7 ? 2 : 1;
   for (const t of item.tokens){
@@ -821,7 +829,7 @@ function renderCatalog(){
   const phrase = norm(query).trim();
   let fuzzy = false;
   if (words.length){
-    const exact = list.filter(i => i.key.includes(phrase));
+    const exact = list.filter(i => hit(i, phrase));
     if (exact.length) list = exact;
     else {
       const scored = list.map(i => [i, matchScore(i, words)]).filter(([,s]) => s > 0);

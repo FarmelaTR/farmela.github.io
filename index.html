@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hey Farmela Katalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Brand: farmelatr.com theme - navy, warm beige, taupe, Figtree. Light only, like the site.
+     Layout: one column; browse -> list -> one review screen -> WhatsApp. Sizes in em so "Yazıyı büyüt" scales everything. */
+  --bg:#f7f4f1;
+  --surface:#ffffff;
+  --ink:#222222;
+  --muted:#5f574f;
+  --line:#e4dcd3;
+  --accent:#1d1d75;
+  --accent-ink:#ffffff;
+  --accent-soft:#efe9e2;
+  --taupe:#ae9d8d;
+  --wa:#167a43;
+  --wa-ink:#ffffff;
+  --badge:#efe6dc;
+  --badge-ink:#5e4a36;
+  --font:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:19px;line-height:1.5;padding-bottom:9em}
+body.big{font-size:23px}
+body.locked{overflow:hidden}
+.wrap{max-width:680px;margin:0 auto;padding:0 18px}
+button{font-family:inherit;font-size:1em;color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Header */
+header{padding:1.3em 0 .4em}
+.head{display:flex;align-items:center;gap:.8em}
+.logo{width:3.6em;height:auto;flex:0 0 3.6em}
+.kicker{margin:0;color:var(--taupe);font-weight:600;font-size:.8em;letter-spacing:.06em;text-transform:uppercase}
+.brand{font-size:1.7em;font-weight:700;margin:0;color:var(--accent);line-height:1.15}
+.tag{margin:.5em 0 0;font-size:1.05em}
+.textsize{margin-top:.8em;display:inline-flex;align-items:center;gap:.5em;min-height:2.6em;padding:0 1em;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
+.textsize[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.textsize .aa{font-weight:700}
+
+.steps{list-style:none;margin:1em 0 0;padding:0;display:grid;gap:.5em}
+.steps li{display:flex;gap:.75em;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:.8em;padding:.7em .85em}
+.num{flex:0 0 1.8em;height:1.8em;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:.95em}
+.note{background:var(--accent-soft);border-radius:.8em;padding:.75em .85em;margin:.6em 0 0;font-size:.95em}
+.note p{margin:0}
+.note p+p{margin-top:.4em}
+
+/* Find */
+.find{margin-top:1.6em}
+.find h2,.cats-h{font-size:1.25em;color:var(--accent);margin:0 0 .5em;font-weight:600}
+.search{position:relative}
+#q{width:100%;font:inherit;font-size:1.05em;padding:.75em 3em .75em .85em;border-radius:.75em;border:2px solid var(--taupe);background:var(--surface);color:var(--ink)}
+#q:focus{outline:none;border-color:var(--accent)}
+#qclear{position:absolute;right:.3em;top:50%;transform:translateY(-50%);min-width:2.6em;height:2.6em;border:0;border-radius:.6em;background:var(--accent-soft);color:var(--ink);font-weight:600;cursor:pointer;padding:0 .6em}
+.qhint{margin:.35em 0 0;color:var(--muted);font-size:.85em}
+.cats-h{margin-top:1.2em}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
+.cat{display:flex;align-items:center;gap:.55em;min-height:3.2em;padding:.5em .7em;border-radius:.8em;border:2px solid var(--line);background:var(--surface);text-align:left;font-weight:600;font-size:.92em;cursor:pointer;line-height:1.2}
+.cat svg{flex:0 0 1.6em;width:1.6em;height:1.6em;fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.cat[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.cat[aria-pressed="true"] svg{stroke:var(--accent-ink)}
+.cat.wide{grid-column:1 / -1}
+
+/* Results */
+.resbar{display:flex;align-items:center;justify-content:space-between;gap:.6em;margin:1.6em 0 .2em;flex-wrap:wrap}
+.resbar h2{font-size:1.3em;font-weight:600;margin:0;color:var(--accent)}
+.resbar .count{color:var(--muted);font-weight:500;font-size:.75em}
+.showall{min-height:2.6em;padding:0 1em;border-radius:999px;border:2px solid var(--accent);background:transparent;color:var(--accent);font-weight:600;cursor:pointer}
+h3.group{font-size:1.15em;font-weight:600;margin:1.4em 0 .6em;color:var(--accent);padding-bottom:.3em;border-bottom:2px solid var(--taupe)}
+.list{display:grid;gap:.65em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:.85em;padding:.85em;display:grid;gap:.7em}
+.card.on{border:2px solid var(--wa);padding:calc(.85em - 1px)}
+.top{display:flex;gap:.75em;align-items:flex-start}
+.pic{flex:0 0 5.4em;width:5.4em;height:5.4em;border-radius:.6em;background:#fff;border:1px solid var(--line);object-fit:contain}
+.pic.icon{display:grid;place-items:center;background:var(--accent-soft);border-color:transparent}
+.pic.icon svg{width:3em;height:3em;fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.name{display:block;font-size:1.05em;font-weight:600;margin:0;line-height:1.3}
+.open{width:100%;border:0;background:transparent;padding:0;text-align:left;cursor:pointer;color:inherit}
+.open .tx{display:block}
+.open .price,.open .price-ask{display:block}
+.more{display:inline-block;margin-top:.25em;color:var(--accent);font-weight:600;font-size:.88em;text-decoration:underline;text-underline-offset:.2em}
+#detail{position:fixed;inset:0;z-index:20;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
+#detail .wrap{padding-bottom:3em}
+.dpic{display:block;width:min(70vw,300px);height:auto;aspect-ratio:1;margin:1em auto .6em;border-radius:1em;background:#fff;border:1px solid var(--line);object-fit:contain}
+.dpic.icon{display:grid;place-items:center;background:var(--accent-soft);border:0}
+.dpic.icon svg{width:45%;height:45%;fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.dname{font-size:1.4em;color:var(--accent);margin:.2em 0 .1em;line-height:1.25;text-wrap:balance}
+.dcat{color:var(--taupe);font-weight:700;font-size:.8em;letter-spacing:.06em;text-transform:uppercase;margin:0}
+.ddesc{font-size:1.05em;margin:.8em 0}
+.dnote{background:var(--accent-soft);border-radius:.8em;padding:.7em .85em;font-size:.88em;color:var(--muted);margin:.8em 0}
+.dact{display:grid;gap:.6em;margin-top:1em}
+.vlabel{font-weight:600;margin:1em 0 .4em}
+.vopts{display:flex;flex-wrap:wrap;gap:.5em}
+.vopt{min-height:2.9em;padding:.4em 1em;border-radius:.7em;border:2px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer;line-height:1.2;text-align:left}
+.vopt small{display:block;font-weight:500;font-size:.8em;color:var(--muted)}
+.vopt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.vopt[aria-pressed="true"] small{color:var(--accent-ink)}
+.vsel{margin:.8em 0 .3em;padding:.55em .85em;border-radius:.7em;background:var(--accent-soft);border-left:.3em solid var(--accent);font-size:1.05em}
+.vsel b{color:var(--accent);font-size:1.15em}
+.vsel.need{background:#fff3e3;border-left-color:#b45309;color:#7a3a07;font-weight:600}
+.add.need{background:var(--surface);color:var(--accent)}
+@keyframes vflash{0%,100%{transform:none}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.vsel.flash{animation:vflash .45s ease}
+@media (prefers-reduced-motion: reduce){.vsel.flash{animation:none;outline:3px solid #b45309}}
+.vchip{display:inline-block;margin-left:.3em;padding:.05em .55em;border-radius:.45em;background:var(--accent);color:var(--accent-ink);font-size:.85em;font-weight:700;white-space:nowrap;vertical-align:.05em}
+.sizes{display:block;color:var(--muted);font-size:.85em;margin-top:.15em}
+.badge{display:inline-block;background:var(--badge);color:var(--badge-ink);font-size:.78em;font-weight:600;border-radius:.4em;padding:.05em .5em;margin-bottom:.3em}
+.price{display:block;font-size:1.15em;font-weight:700;margin:.2em 0 0;font-variant-numeric:tabular-nums}
+.price-ask{font-size:.88em;color:var(--muted);margin:.2em 0 0}
+.add{width:100%;min-height:2.9em;border-radius:.75em;border:2px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:600;cursor:pointer}
+.inlist{display:flex;flex-wrap:wrap;gap:.6em;align-items:center;justify-content:space-between}
+.state{color:var(--wa);font-weight:700;display:flex;align-items:center;gap:.3em}
+.qty{display:flex;align-items:center;border:2px solid var(--accent);border-radius:.75em;overflow:hidden;background:var(--surface)}
+.qty button{width:2.9em;height:2.7em;border:0;background:var(--accent-soft);color:var(--accent);font-size:1.4em;font-weight:700;cursor:pointer;line-height:1}
+.qty span{min-width:4.2em;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.empty{background:var(--surface);border:1px dashed var(--taupe);border-radius:.85em;padding:1em}
+.ask-btn{display:flex;align-items:center;justify-content:center;margin-top:1em;min-height:3em;border-radius:.75em;border:2px solid var(--wa);color:var(--wa);background:var(--surface);font-weight:700;text-decoration:none;padding:.5em 1em;text-align:center}
+
+footer{margin:2.2em 0 0;color:var(--muted);font-size:.85em}
+footer p{margin:0 0 .6em}
+footer a{color:var(--accent)}
+
+/* Bottom bar: always tells what is in the list */
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:2px solid var(--line);padding:.6em 18px calc(.6em + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+#bar .in{max-width:680px;margin:0 auto;display:grid;gap:.4em}
+#bar .sum{display:flex;justify-content:space-between;font-weight:600;font-size:.9em}
+#bar .sum span:last-child{font-variant-numeric:tabular-nums}
+.primary{display:flex;align-items:center;justify-content:center;gap:.5em;width:100%;min-height:3.1em;border-radius:.85em;border:0;background:var(--wa);color:var(--wa-ink);font-weight:700;font-size:1.05em;cursor:pointer;text-decoration:none;text-align:center;padding:.4em 1em}
+#up{position:fixed;right:14px;z-index:9;min-height:2.8em;padding:0 1em;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+
+/* Toast: short feedback with undo */
+#toast{position:fixed;left:50%;transform:translateX(-50%);z-index:30;width:min(92vw,520px);background:var(--ink);color:#fff;border-radius:.8em;padding:.6em .7em .6em 1em;display:flex;align-items:center;justify-content:space-between;gap:.8em;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#toast button{min-height:2.5em;padding:0 1em;border-radius:.6em;border:2px solid #fff;background:transparent;color:#fff;font-weight:700;cursor:pointer;white-space:nowrap}
+
+/* Review sheet */
+#sheet{position:fixed;inset:0;z-index:20;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
+#sheet .wrap{padding-bottom:2em}
+.sheet-head{position:sticky;top:0;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:.6em;padding:.8em 0;border-bottom:2px solid var(--line);z-index:2}
+.sheet-head h2{margin:0;font-size:1.35em;color:var(--accent)}
+.back{min-height:2.7em;padding:0 1em;border-radius:.7em;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font-weight:700;cursor:pointer}
+.stepline{color:var(--taupe);font-weight:700;font-size:.8em;letter-spacing:.06em;text-transform:uppercase;margin:1.1em 0 .4em}
+.line{display:grid;grid-template-columns:1fr auto;gap:.4em .8em;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:.8em;padding:.7em .8em;margin-bottom:.5em}
+.line .n{font-weight:600;line-height:1.3}
+.line .p{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.line .ctl{grid-column:1 / -1;display:flex;gap:.6em;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.rm{min-height:2.7em;padding:0 1em;border-radius:.7em;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.totals{background:var(--surface);border-radius:.8em;border:1px solid var(--line);padding:.8em}
+.totals .row{display:flex;justify-content:space-between;gap:.8em;font-weight:600}
+.totals .row.big{font-size:1.15em;font-weight:700;margin-top:.3em}
+.totals .hint{margin:.4em 0 0;color:var(--muted);font-size:.88em}
+.field{margin:.2em 0 .9em}
+.field label.t,.field legend{display:block;font-weight:600;margin-bottom:.35em;padding:0}
+.field .opt{color:var(--muted);font-weight:400}
+fieldset{border:0;margin:0;padding:0}
+#name{width:100%;font:inherit;padding:.7em .85em;border-radius:.7em;border:2px solid var(--taupe);background:var(--surface);color:var(--ink)}
+#name:focus{outline:none;border-color:var(--accent)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:.5em}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;width:1px;height:1px}
+.choice span{display:flex;align-items:center;gap:.5em;min-height:2.9em;padding:.4em .8em;border-radius:.7em;border:2px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer;line-height:1.2}
+.choice span::before{content:"";flex:0 0 1.1em;height:1.1em;border-radius:50%;border:2px solid var(--taupe);background:var(--surface)}
+.choice input:checked + span{border-color:var(--accent);background:var(--accent-soft)}
+.choice input:checked + span::before{border:.35em solid var(--accent)}
+.choice input:focus-visible + span{outline:3px solid var(--accent);outline-offset:2px}
+.after{background:var(--surface);border:2px solid var(--wa);border-radius:.9em;padding:1em;margin-top:1em}
+.after h3{margin:0 0 .4em;color:var(--wa);font-size:1.2em}
+.after ol{margin:.3em 0 .8em;padding-left:1.3em}
+.after .row2{display:grid;gap:.5em}
+.ghost{min-height:2.9em;border-radius:.8em;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font-weight:700;cursor:pointer}
+.small{color:var(--muted);font-size:.85em;margin:.6em 0 0}
+@media (prefers-reduced-motion: no-preference){.add,.cat,.primary,.choice span{transition:background-color .15s,border-color .15s,color .15s}}
+
+/* ---------- Wider screens: phone layout above stays the default ---------- */
+@media (min-width:700px){
+  body{font-size:18px}
+  .wrap{max-width:1180px;padding:0 28px}
+  header{padding-top:1.8em}
+  .steps{grid-template-columns:repeat(3,1fr)}
+  .note{display:grid;grid-template-columns:1fr 1fr;gap:.4em 1.5em}
+  .note p+p{margin-top:0}
+  .find{display:grid;grid-template-columns:minmax(0,1fr);max-width:none}
+  .search{max-width:640px}
+  .cats{grid-template-columns:repeat(4,1fr)}
+  .cat.wide{grid-column:auto}
+  .list{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+  .card{grid-template-rows:1fr auto}
+  .ask-btn{max-width:640px;margin-left:auto;margin-right:auto}
+  #bar .in{max-width:1180px;grid-template-columns:1fr minmax(260px,360px);align-items:center;gap:1.2em}
+  #bar .sum{font-size:1em;gap:1em}
+
+  /* product page: centered window over the catalogue */
+  #detail,#sheet{background:rgba(20,18,40,.45)}
+  #detail .wrap{max-width:900px;margin:5vh auto;background:var(--bg);border-radius:1.2em;padding:0 2em 2em;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+  #detail .sheet-head{border-radius:1.2em 1.2em 0 0}
+  #detailBody{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);column-gap:2.2em;align-items:start}
+  #detailBody > *{grid-column:2}
+  #detailBody > .dpic{grid-column:1;grid-row:1 / span 20;width:100%;margin:1.4em 0 0;position:sticky;top:5em}
+  #detailBody > .badge{justify-self:start}
+  #detailBody > .dcat{margin-top:1.6em}
+
+  /* order list: panel on the right */
+  #sheet .wrap{max-width:540px;margin:0 0 0 auto;min-height:100%;background:var(--bg);padding:0 1.6em 2em;box-shadow:-12px 0 40px rgba(0,0,0,.2)}
+}
+@media (min-width:1000px){
+  .cats{grid-template-columns:repeat(7,1fr)}
+  .cat{flex-direction:column;align-items:flex-start;justify-content:center;gap:.4em;min-height:4.6em}
+  .list{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9em}
+  .card .top{flex-direction:column;align-items:stretch;gap:.6em}
+  .card .pic{flex:none;width:100%;height:12em}
+  .card .pic.icon svg{width:4em;height:4em}
+  .card .name{font-size:1em}
+  .card .qty button{width:2.4em}
+  .card .qty span{min-width:3.6em}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><p class="kicker">Şişli · Elden teslimat</p><h1 class="brand">Hey Farmela</h1></div></div>
+    <p class="tag">Vitamin, takviye ve dermokozmetik. Eczaneye gelmenize gerek yok, biz getiriyoruz.</p>
+    <button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button>
+    <ol class="steps" aria-label="Nasıl sipariş verilir">
+      <li><span class="num">1</span><span>Ürünü bulun, <b>Listeye ekle</b>'ye basın.</span></li>
+      <li><span class="num">2</span><span>Alttaki yeşil <b>Listemi gönder</b> düğmesine basın.</span></li>
+      <li><span class="num">3</span><span>WhatsApp'ta <b>gönder</b>'e basın. Fiyatı ve saati size yazalım.</span></li>
+    </ol>
+    <div class="note">
+      <p><b>Şimdi ödeme yok.</b> Siparişi onayladığımızda kart veya havale ile ödersiniz.</p>
+      <p><b>Teslimat:</b> Nişantaşı, Bomonti, Kurtuluş. 900 TL ve üzeri ücretsiz, altında 150 TL. Eczaneden kendiniz de alabilirsiniz.</p>
+    </div>
+  </header>
+
+  <section class="find" aria-label="Ürün bulma">
+    <h2><label for="q">Ne arıyorsunuz?</label></h2>
+    <div class="search">
+      <input id="q" type="search" enterkeyhint="search" placeholder="Ürün veya marka yazın" autocomplete="off">
+      <button type="button" id="qclear" hidden>Sil</button>
+    </div>
+    <p class="qhint">Örnek: balık yağı, multivitamin, eklem, pişik kremi. Yazım hatası olsa da buluruz.</p>
+    <p class="cats-h" id="cats-h">Veya bir bölüm seçin</p>
+    <div class="cats" id="cats" role="group" aria-labelledby="cats-h"></div>
+  </section>
+
+  <div class="resbar" id="resbar"></div>
+  <main id="catalog" aria-live="polite"></main>
+
+  <a class="ask-btn" id="askLink" href="https://wa.me/905333573784" target="_blank" rel="noopener">Aradığınız ürün yok mu? WhatsApp'tan sorun</a>
+
+  <footer>
+    <p>Fiyatlar Kasım 2026 fiyatlarıdır ve değişebilir. Siparişte güncel fiyatı size teyit ederiz.</p>
+    <p>Gıda takviyeleri ilaç değildir, hastalıkların önlenmesi veya tedavisi amacıyla kullanılmaz.</p>
+    <p>WhatsApp: 0533 357 37 84 · <a href="https://instagram.com/farmelatr" target="_blank" rel="noopener">Instagram</a> · <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a></p>
+  </footer>
+</div>
+
+<button type="button" id="up" hidden>↑ Başa dön</button>
+
+<div id="bar" hidden>
+  <div class="in">
+    <div class="sum"><span id="barCount"></span><span id="barTotal"></span></div>
+    <button type="button" class="primary" id="openSheet">Listemi gör ve gönder</button>
+  </div>
+</div>
+
+<div id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden>
+  <div class="wrap">
+    <div class="sheet-head"><h2 id="dTitle" style="font-size:1.1em">Ürün bilgisi</h2><button type="button" class="back" id="closeDetail">← Geri</button></div>
+    <div id="detailBody"></div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite" hidden><span id="toastMsg"></span><button type="button" id="toastUndo" hidden>Geri al</button></div>
+
+<div id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="wrap">
+    <div class="sheet-head"><h2 id="sheetTitle">Sipariş listeniz</h2><button type="button" class="back" id="closeSheet">← Geri</button></div>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+
+<script>
+// ---- Edit prices here. null = "price on request". Format: [name, category, price, popular, photo file in img/ (optional), sizes (optional)]
+// Sizes: [[label, price, photo], ...] smallest first. The smallest is shown by default; picking another size on the product page swaps price and photo.
+// Categories: t = Vitamin & Takviye, c = Cilt Bakımı, a = Anne & Çocuk, k = Kişisel Bakım, s = Hazır Setler
+const PHONE = "905333573784";
+const DATA = [
+  // Vitamin & Takviye
+  ["Orzax Ocean Plus Omega 3 1200 mg","t",490,1,"orzax-ocean-plus-omega-3-1200-mg-balik-yagi-30-kapsul",[["30 kapsül",490,"orzax-ocean-plus-omega-3-1200-mg-balik-yagi-30-kapsul"],["50 kapsül",null,"orzax-ocean-plus-omega-3-1200-mg-50-kapsul"]]],
+  ["Kartix Glucosamine Complex, 90 kapsül","t",749,1,"kartix-glucosamine-complex-90-kapsul"],
+  ["Supradyn Koenzim Q10 Film Kaplı Tablet","t",null,1,"supradyn-koenzim-q10-30-tablet",[["30 tablet",null,"supradyn-koenzim-q10-30-tablet"],["60 tablet",null,"supradyn-koenzim-q10-60-tablet"]]],
+  ["Ocuvite Complete, 60 tablet","t",null,1,"ocuvite-complete-60"],
+  ["Osteocare","t",null,1,"osteocare-30-tablet",[["30 tablet",null,"osteocare-30-tablet"],["90 tablet",null,"osteocare-90-tablet"]]],
+  ["Orzax Ocean Daily One Energy, 30 tablet","t",null,1,"orzax-ocean-daily-one-energy-30-tablet"],
+  ["Redoxon C Vitamini, 30 efervesan tablet","t",null,1,"redoxon-c-vitamini-efervesan"],
+  ["Redoxon 3'lü Etki Efervesan Tablet","t",null,1,"redoxon-uclu-etki-15-efervesan",[["15 tablet",null,"redoxon-uclu-etki-15-efervesan"],["30 tablet",null,"redoxon-uclu-etki-30-efervesan"]]],
+  ["Cosakondrin Plus, 60 tablet","t",null,1,"cosakondrin-plus-60-tablet"],
+  ["Balen Omega 3 Norveç Balık Yağı 1380 mg","t",450,0,"balen-omega-3-norvec-balik-yagi-1380-mg-100-kapsul",[["100 kapsül",450,"balen-omega-3-norvec-balik-yagi-1380-mg-100-kapsul"],["200 kapsül",678,"balen-omega-3-norvec-balik-yagi-1380-mg-200-kapsul"]]],
+  ["Orzax Ocean Vitamin D3K2 Damla, 20 ml","t",390,0,"orzax-ocean-vitamin-d3k2-damla-20-ml"],
+  ["Orzax Ocean ExtraMag 200 mg","t",480,0,"orzax-ocean-extramag-uclu-kombinasyon-200-mg-30-tablet",[["30 tablet",480,"orzax-ocean-extramag-uclu-kombinasyon-200-mg-30-tablet"],["60 tablet",600,"orzax-ocean-extramag-uclu-kombinasyon-200-mg-60-tablet"],["90 tablet",null,"orzax-ocean-extramag-90-tablet"]]],
+  ["Orzax Ocean Polysitol, 30 saşe","t",1099,0,"orzax-ocean-polysitol-30-sase"],
+  ["Orzax Ocean Passiflora 300 mg, 30 kapsül","t",450,0,"orzax-ocean-passiflora-300-mg-30-kapsul"],
+  ["New Life Mag4 Day & Night, 30+30 tablet","t",979,0,"new-life-mag4-day-ve-night-30-30-tablet"],
+  ["New Life B12 Plus, 60 tablet","t",null,0,"new-life-b12-plus-60-tablet"],
+  ["New Life EFA S-1200 Omega 3, 45 kapsül","t",null,0,"new-life-efa-s-1200-omega-3-45-kapsul"],
+  ["New Life 4 Hepa, 30 kapsül","t",null,0,"new-life-4-hepa-30-kapsul"],
+  ["Solgar Methylcobalamin B12 1000 mcg","t",440,0,"solgar-methylcobalamin-vitamin-b12-1000-mcg-30-tablet",[["30 tablet",440,"solgar-methylcobalamin-vitamin-b12-1000-mcg-30-tablet"],["60 tablet",null,"solgar-methylcobalamin-60-tablet"]]],
+  ["Solgar Vitamin D3 1000 IU, 100 kapsül","t",null,0,"solgar-vitamin-d3-1000-iu-100-kapsul"],
+  ["Solgar Magnesium Citrate, 60 tablet","t",null,0,"solgar-magnesium-citrate-60-tablet"],
+  ["Solgar Omega-3 Triple Strength 950 mg","t",null,0,"solgar-omega-3-triple-strength-50-kapsul",[["50 kapsül",null,"solgar-omega-3-triple-strength-50-kapsul"],["100 kapsül",null,"solgar-omega-3-950-100-kapsul"]]],
+  ["Nutraxin Vitamin Max C-D-Zinc, 60 tablet","t",260,0,"nutraxin-vitamin-max-c-d-zinc-60-tablet"],
+  ["Nutraxin Quercetin Bromelain, 30 tablet","t",420,0,"nutraxin-quercetin-bromelain-30-tablet"],
+  ["İmuneks Beta-Glukan 10 mg, 40 kapsül","t",400,0,"imuneks-beta-glukan-10-mg-40-kapsul"],
+  ["İmuneks Plus Beta-Glukan ve C Vitamini, 30 kapsül","t",430,0,"imuneks-plus-beta-glukan-naturel-c-vitamini-30-kapsul"],
+  ["İmuneks İnflamax Zerdeçal, 60 kapsül","t",null,0,"imuneks-inflamax-60-kapsul"],
+  ["VitaGlucan+ Beta-Glukan, C Vitamini, Çinko, 30 tablet","t",309,0,"vitaglucan-beta-glukan-c-vitamini-cinko-30-tablet"],
+  ["Youplus Vitamin C 1000 mg, Çinko, Propolis, 20 efervesan tablet","t",null,0,"youplus-vitamin-c-cinko-propolis-20-efervesan"],
+  ["Suda Collagen Multiform, 90 tablet","t",499,0,"suda-collagen-multiform-90-tablet"],
+  ["Collagen Forte, 90 tablet","t",null,0],
+  ["Medohbiotin, 60 tablet","t",null,0,"medohbiotin-60-tablet"],
+  ["Supradyn Energy Focus, 30 film kaplı tablet","t",null,0,"supradyn-energy-focus-30-tablet"],
+  ["Supradyn Focus","t",null,0,"supradyn-energy-focus-30-tablet"],
+  ["EasyFishoil, 30 kapsül","t",null,0],
+  ["Sambucol Plus, 15 efervesan tablet","t",null,0,"sambucol-plus-15-efervesan"],
+  ["Magnimore Plus","t",null,0,"magnimore-plus-30",[["30 tablet",null,"magnimore-plus-30"],["60 tablet",null,"magnimore-plus-60"],["90 tablet",null,"magnimore-plus-90"],["120 tablet",null,"magnimore-plus-120"]]],
+  ["Orzax Bigflor Probiyotik, 10 saşe","t",null,0,"orzax-bigflor-probiyotik-10-sase"],
+  ["Denflor Probiyotik, 10 saşe","t",null,0,"denflor-probiyotik-10-sase"],
+  ["BST Art-Max, 90 tablet","t",null,0,"bst-art-max-90"],
+  ["Vitafenix Serenita, 60 kapsül","t",1378.90,0,"vitafenix-serenita-60-kapsul"],
+  ["Vitafenix Angard, 20 kapsül","t",2153.90,0,"vitafenix-angard-20-kapsul"],
+  ["Vitafenix Cognifenix, 40 kapsül","t",null,0,"vitafenix-cognifenix-40-kapsul"],
+  ["Vitafenix Magna P, 60 kapsül","t",975.90,0,"vitafenix-magna-p-60-kapsul"],
+
+  // Cilt Bakımı
+  ["La Roche-Posay Effaclar Temizleme Jeli, 400 ml","c",946.90,1,"la-roche-posay-yagli-ve-akneye-egilim-gosteren-cilt-tipleri-icin-effaclar-yuz-te"],
+  ["La Roche-Posay Effaclar Tanışma Kiti (Jel 50 ml + Duo+ 15 ml)","c",789,0,"la-roche-posay-effaclar-tanisma-kiti"],
+  ["La Roche-Posay Cicaplast Baume B5, 40 ml","c",null,0,"lrp-cicaplast-baume-b5-40-ml"],
+  ["La Roche-Posay Anthelios UVmune 400 SPF 50+, 50 ml","c",null,0,"lrp-anthelios-uvmune-400-50-ml"],
+  ["La Roche-Posay Hyalu B5 Serum, 30 ml","c",null,0,"lrp-hyalu-b5-serum-30-ml"],
+  ["La Roche-Posay Lipikar Baume AP+M, 400 ml","c",null,0,"lrp-lipikar-baume-ap-m-400-ml"],
+  ["Bioderma Atoderm Cream Ultra, 200 ml","c",849,1,"bioderma-atoderm-cream-ultra-kuru-ciltler-bebek-cocuk-yetiskin-nemlendirici-yuz-"],
+  ["Bioderma Photoderm Creme SPF 50+, 40 ml","c",730,0,"bioderma-photoderm-creme-spf-50-gunes-kremi-40-ml"],
+  ["Bioderma Sebium Hydra Nemlendirici, 40 ml","c",1100,0,"bioderma-sebium-hydra-nemlendirici-bakim-kremi-40-ml"],
+  ["Bioderma Sensibio Foaming Gel, 500 ml","c",null,0,"bioderma-sensibio-foaming-gel-500-ml"],
+  ["Bioderma Sebium Foaming Gel, 500 ml","c",null,0,"bioderma-sebium-foaming-gel"],
+  ["Bioderma Sensibio H2O Misel Su, 500 ml","c",null,0,"bioderma-sensibio-h2o-500-ml"],
+  ["CeraVe Nemlendirici Krem, 340 g","c",null,0,"cerave-nemlendirici-krem-340-g"],
+  ["CeraVe Köpüren Temizleyici, 236 ml","c",null,0,"cerave-kopuren-temizleyici-236-ml"],
+  ["Avène Termal Su, 300 ml","c",null,0,"avene-termal-su-300-ml"],
+  ["Avène Cicalfate+ Onarıcı Krem, 40 ml","c",null,0,"avene-cicalfate-krem-40-ml"],
+  ["Vichy Minéral 89 Serum, 50 ml","c",null,0,"vichy-mineral-89-serum-50-ml"],
+  ["Eucerin Hyaluron-Filler Gündüz Kremi SPF 15, 50 ml","c",null,0,"eucerin-hyaluron-filler-gunduz-spf15-50-ml"],
+  ["Caudalie Vinoperfect Serum, 30 ml","c",null,0,"caudalie-vinoperfect-serum-30-ml"],
+  ["Solante Antiox SPF 50+ Güneş Losyonu, 150 ml","c",1390,0,"solante-antiox-spf-50-gunes-koruyucu-losyon-150-ml"],
+  ["Solante Acnes SPF 50 Güneş Losyonu, 150 ml","c",1379,0,"solante-acnes-spf-50-gunes-koruyucu-losyon-150-ml"],
+  ["Bio-Oil, 125 ml","c",null,0,"bio-oil-125-ml"],
+
+  // Anne & Çocuk
+  ["Sterimar Burun Spreyi, 100 ml","a",null,1,"sterimar-burun-spreyi-100-ml"],
+  ["Bepanthol Baby Pişik Kremi","a",null,0,"bepanthol-baby-pisik-30-g",[["30 g",null,"bepanthol-baby-pisik-30-g"],["100 g",null,"bepanthol-baby-pisik-100-g"]]],
+  ["Sudocrem","a",null,0,"sudocrem-125-g",[["125 g",null,"sudocrem-125-g"],["250 g",null,"sudocrem-250-g"]]],
+  ["Gifrer Serum Fizyolojik, 40 flakon x 5 ml","a",null,0,"gifrer-serum-fizyolojik-40-flakon"],
+  ["Undo Talk Pudra, 100 g","a",null,0,"undo-talk-pudra-100-g"],
+  ["Nutrigen Üzüm Pediatrik Şurup, 200 ml","a",null,0,"nutrigen-uzum-sirup-200-ml"],
+  ["Möller's Omega-3 Şurup","a",null,0,"mollers-omega-3-sirup",[["150 ml · Tutti Frutti",null,"mollers-omega-3-sirup"],["250 ml · Limon",null,"mollers-omega-3-sirup-250-ml"]]],
+  ["Multi Jelly Jelibon, 20 g","a",null,0,"multi-jelly-jelibon-20-g"],
+  ["Hyper Immun 44 Şurup, 150 ml","a",null,0,"hyper-immun-44-sirup-150-ml"],
+  ["Orzax Ocean Multi Ballı Şurup, 150 ml","a",null,0,"orzax-ocean-multi-sirup-150-ml"],
+  ["Argivit Focus Şurup, 150 ml","a",null,0,"argivit-focus-sirup-150-ml"],
+  ["Orzax Ocean Microfer Damla, 30 ml","a",null,0,"orzax-ocean-microfer-damla-30-ml"],
+  ["Orzax İmunol Şurup, 150 ml","a",null,0,"orzax-imunol-sirup-150-ml"],
+  ["Imumax Baby & Kids Boğaz Spreyi 3+ yaş, 20 ml","a",null,0,"imumax-baby-kids-bogaz-spreyi-20-ml"],
+  ["iMom Omega 3, 30 kapsül","a",null,0,"imom-omega-3-30-kapsul"],
+  ["Mustela Çatlak Önleyici Yağ, 105 ml","a",null,0,"mustela-catlak-onleyici-yag-105-ml"],
+  ["Curaprox Kids Ultra Soft Diş Fırçası, 4-12 yaş, 1 adet","a",599,0,"curaprox-kids-ultra-soft-4-12-yas-firca"],
+  ["Oral-B Junior Diş Fırçası, 6-12 yaş, ekstra yumuşak, 1 adet","a",242,0,"oral-b-junior-dis-fircasi-6-12-yas-ekstra-yumusak"],
+  ["R.O.C.S. Kids Florürsüz Çocuk Diş Macunu, 3-7 yaş, 45 g","a",299,0,"rocs-kids-meyve-kulahi-cocuk-dis-macunu-45-g"],
+
+  // Kişisel Bakım
+  ["Corega Süper Naneli Protez Yapıştırıcı Krem, 40 g","k",null,1,"corega-naneli-yapistirici-krem-40-g"],
+  ["Corega 3 Dakikada Temizleyici, 30 tablet","k",null,0,"corega-temizleyici-30-tablet"],
+  ["Sebamed İntim Jel, 200 ml","k",null,1,"sebamed-intim-200-ml"],
+  ["Phytorelief CC Pastil, 12 adet","k",null,1,"phytorelief-cc-pastil-12"],
+  ["Bepanthol Derma Merhem, 30 g","k",null,1,"bepanthol-merhem-30-g"],
+  ["Bepanthol Cilt Bakım Kremi, 30 g","k",null,0,"bepanthol-cilt-bakim-kremi-30-g"],
+  ["Bepanthol Sensiderm","k",null,0,"bepanthol-sensiderm-20-g",[["20 g",null,"bepanthol-sensiderm-20-g"],["50 g",null,"bepanthol-sensiderm-50-g"]]],
+  ["Bepanthol Anti-Scar Jel, 20 g","k",null,0,"bepanthol-anti-scar-jel-20-g"],
+  ["Meditech Arnica Jel, 75 g","k",null,0,"meditech-arnica-jel-75-g"],
+  ["Hametol Onarıcı Bakım Kremi, 30 g","k",null,0,"hametol-onarici-krem-30-g"],
+  ["Marvis Jasmin Mint Diş Macunu, 25 ml","k",299,0,"marvis-jasmin-mint-dis-macunu-25-ml"],
+  ["Signal White Now Beyazlatıcı Diş Macunu, 75 ml","k",199,0,"signal-white-now-dis-macunu-75-ml"],
+  ["R.O.C.S. Coffee & Tobacco Diş Macunu, 74 g","k",399,0,"rocs-coffee-tobacco-dis-macunu-74-g"],
+  ["Oral-B Essential Floss Naneli Diş İpi, 50 m","k",359,0,"oral-b-essential-floss-naneli-mumlu-dis-ipi-50-m"],
+  ["TePe Arayüz Fırçası 0,8 mm (Size 5), 8'li","k",609,0,"tepe-interdental-brush-original-arayuz-fircasi-yesil-0-8-mm-size-5-8-li"],
+  ["Oral-B Pro-Expert Arayüz Fırçası Başlangıç Kiti, 1 set","k",1279,0,"oral-b-pro-expert-clinic-line-interdental-arayuz-fircasi-starter-kit"],
+  ["Roll Bant Topuk Bandı, 4 adet","k",189,0,"roll-bant-topuk-bandi-4-adet"],
+  ["Tuba Salisilik Asitli Nasır Bandı, 6 adet","k",269,0,"tuba-salisilik-asitli-nasir-bandi-6-adet"],
+  ["B-Good Dijital Ateş Ölçer, 1 adet","k",229,0,"b-good-digital-ates-olcer"],
+  ["Art de Huile Fly Mix Vücut Spreyi, 120 ml","k",759,0,"art-de-huile-fly-mix-vucut-spreyi-120-ml"],
+
+  // Hazır Setler
+  ["Bağışıklık Seti (C Vitamini + Çinko + Propolis + D3)","s",749,0],
+  ["Mineral İkilisi (İyot Damla + Selenyum)","s",629,0,"mineral-ikilisi-iyot-damla-selenyum"],
+  ["Çocuk Kemik & Mineral Seti (Pharmaton Kiddi + Ocean Tutti Frutti Şurup)","s",1399,0],
+  ["Bebek Başlangıç Seti (Bepanthol + Emzik + Biberon Emziği + Diş Kaşıyıcı)","s",899,0,"bebek-baslangic-seti-bepanthol-emzik-dis-kasiyici"],
+  ["Ağız Bakım Seti (3 Macun + Diş İpi + Fırça)","s",449,0,"agiz-bakim-mega-set-3-macun-dis-ipi-firca"],
+  ["El & Cilt Bakım Seti (Vaseline + Oje + Makyaj Pamuğu)","s",579,0,"el-cilt-bakim-seti-vaseline-oje-makyaj-pamugu"]
+];
+const DESC = {
+"Orzax Ocean Plus Omega 3 1200 mg": "Balık yağından elde edilen Omega-3 (EPA ve DHA) içeren yumuşak kapsül. Günde tek kapsüllük pratik kullanım için tercih edilir.",
+"Kartix Glucosamine Complex, 90 kapsül": "Glukozamin içeren eklem destek takviyesi. 90 kapsüllük ambalaj uzun süreli düzenli kullanım için uygundur.",
+"Ocuvite Complete, 60 tablet": "Lutein ve zeaksantin başta olmak üzere göz sağlığına yönelik vitamin ve mineraller içeren takviye.",
+"Osteocare": "Kalsiyum, magnezyum, çinko ve D vitamini bir arada. Kemik sağlığı için tercih edilen klasik bir formül.",
+"Redoxon C Vitamini, 30 efervesan tablet": "Suda eriyen efervesan C vitamini tableti. Bayer'in Redoxon serisinden.",
+"Redoxon 3'lü Etki Efervesan Tablet": "C vitamini, D vitamini ve çinkoyu tek efervesan tablette birleştirir.",
+"Cosakondrin Plus, 60 tablet": "Glukozamin ve kondroitin içeren eklem destek takviyesi.",
+"Balen Omega 3 Norveç Balık Yağı 1380 mg": "Norveç kaynaklı balık yağı içeren Omega-3 kapsül. 100 kapsüllük ekonomik ve 200 kapsüllük aile boyu seçenekleri var.",
+"Orzax Ocean Vitamin D3K2 Damla, 20 ml": "D3 ve K2 vitaminini birlikte içeren damla. Damla formu, tablet yutmakta zorlananlar için pratiktir.",
+"Orzax Ocean ExtraMag 200 mg": "Üç farklı magnezyum formunu bir arada sunan takviye. 30 tabletlik ve 60 tabletlik avantajlı boyları var.",
+"Orzax Ocean Polysitol, 30 saşe": "İnositol içeren, suda karıştırılarak kullanılan saşe takviye. Kadınlara yönelik bir formüldür.",
+"Orzax Ocean Passiflora 300 mg, 30 kapsül": "Çarkıfelek (passiflora) bitki ekstresi içeren bitkisel takviye.",
+"New Life Mag4 Day & Night, 30+30 tablet": "Gündüz ve gece için ayrı tabletleri olan magnezyum takviyesi.",
+"New Life B12 Plus, 60 tablet": "B12 vitamini ile birlikte folik asit ve biotin içerir.",
+"Solgar Methylcobalamin B12 1000 mcg": "Metilkobalamin formunda B12 vitamini içeren Solgar ürünü.",
+"Solgar Vitamin D3 1000 IU, 100 kapsül": "D3 vitamini içeren Solgar kapsül. 100 kapsüllük uzun süreli ambalaj.",
+"Solgar Magnesium Citrate, 60 tablet": "Sitrat formunda magnezyum içeren Solgar tablet.",
+"Solgar Omega-3 Triple Strength 950 mg": "Yüksek konsantrasyonda EPA ve DHA içeren Solgar balık yağı kapsülü.",
+"Nutraxin Vitamin Max C-D-Zinc, 60 tablet": "C vitamini, D vitamini ve çinkoyu tek tablette birleştirir.",
+"Nutraxin Quercetin Bromelain, 30 tablet": "Kuersetin ve ananastan elde edilen bromelain içerir.",
+"İmuneks Beta-Glukan 10 mg, 40 kapsül": "Beta-glukan (1,3/1,6) içeren kapsül.",
+"İmuneks Plus Beta-Glukan ve C Vitamini, 30 kapsül": "Beta-glukan ve doğal C vitamini kaynağı içeren kapsül.",
+"VitaGlucan+ Beta-Glukan, C Vitamini, Çinko, 30 tablet": "Beta-glukan, C vitamini ve çinkoyu bir arada sunar.",
+"Suda Collagen Multiform, 90 tablet": "Kolajenle birlikte vitamin ve mineraller içeren tablet.",
+"Collagen Forte, 90 tablet": "Kolajen içeren tablet takviye. 90 tabletlik ambalaj.",
+"Medohbiotin, 60 tablet": "Biotin içeren tablet. Saç ve tırnak bakımında tercih edilir.",
+"Supradyn Focus": "Supradyn serisinden multivitamin. Hangi Supradyn'i istediğinizden emin değilseniz kutunun fotoğrafını WhatsApp'tan gönderin.",
+"EasyFishoil, 30 kapsül": "Balık yağından elde edilen Omega-3 kapsül.",
+"Magnimore Plus": "Magnezyum içeren tablet takviye; 11 yaş ve üzeri içindir.",
+"Denflor Probiyotik, 10 saşe": "Faydalı bakteriler içeren probiyotik saşe.",
+"BST Art-Max, 90 tablet": "Glukozamin, kondroitin, hidrolize kolajen ve MSM içeren eklem takviyesi. 18 yaş ve üzeri içindir.",
+"Vitafenix Serenita, 60 kapsül": "Kediotu (valerian) ve şerbetçiotu ekstresi içeren bitkisel kapsül. Akşam rahatlama rutini için tercih edilir.",
+"Vitafenix Angard, 20 kapsül": "Glutatyon içeren Vitafenix kapsül.",
+"Vitafenix Magna P, 60 kapsül": "Magnezyum malat, magnezyum sitrat ve aktif B6 vitamini (P-5-P) içeren kapsül.",
+"La Roche-Posay Effaclar Temizleme Jeli, 400 ml": "Yağlı ve akneye eğilimli ciltler için köpüren yüz temizleme jeli. Sabah ve akşam kullanılır.",
+"La Roche-Posay Effaclar Tanışma Kiti (Jel 50 ml + Duo+ 15 ml)": "Effaclar temizleme jeli ile Effaclar Duo+ bakım kremini deneme boyunda bir araya getiren set.",
+"La Roche-Posay Cicaplast Baume B5, 40 ml": "Pantenol (B5) içeren onarıcı bakım kremi. Kuru, tahriş olmuş bölgeler için; bebeklerden yetişkinlere kullanılır.",
+"La Roche-Posay Hyalu B5 Serum, 30 ml": "Hyalüronik asit ve B5 vitamini içeren nemlendirici yüz serumu.",
+"La Roche-Posay Lipikar Baume AP+M, 400 ml": "Çok kuru ve atopiye eğilimli ciltler için yüz ve vücut balmı. Bebekler dahil tüm aile kullanabilir.",
+"Bioderma Atoderm Cream Ultra, 200 ml": "Kuru ve hassas ciltler için yüz ve vücut nemlendiricisi. Bebek, çocuk ve yetişkinler kullanabilir.",
+"Bioderma Photoderm Creme SPF 50+, 40 ml": "Hassas ve kuru ciltler için çok yüksek korumalı yüz güneş kremi.",
+"Bioderma Sebium Hydra Nemlendirici, 40 ml": "Akne bakımı sırasında kuruyan ciltler için nemlendirici krem.",
+"Bioderma Sensibio Foaming Gel, 500 ml": "Hassas ciltler için yumuşak, köpüren yüz temizleme jeli.",
+"Bioderma Sebium Foaming Gel, 500 ml": "Karma ve yağlı ciltler için köpüren yüz temizleme jeli.",
+"Bioderma Sensibio H2O Misel Su, 500 ml": "Makyajı ve kiri durulama gerektirmeden temizleyen misel su. Hassas ciltler ve göz çevresi için uygundur.",
+"CeraVe Nemlendirici Krem, 340 g": "Seramid ve hyalüronik asit içeren, kuru ve çok kuru ciltler için yüz ve vücut kremi.",
+"CeraVe Köpüren Temizleyici, 236 ml": "Normal ve yağlı ciltler için seramid içeren köpüren temizleyici.",
+"Avène Termal Su, 300 ml": "Hassas ve tahriş olmuş ciltleri ferahlatan termal su spreyi. Gün içinde dilediğiniz zaman sıkılır.",
+"Avène Cicalfate+ Onarıcı Krem, 40 ml": "Tahriş olmuş, çatlamış ciltler için onarıcı bakım kremi. Bebekler dahil kullanılabilir.",
+"Vichy Minéral 89 Serum, 50 ml": "Vichy termal suyu ve hyalüronik asit içeren güçlendirici, nemlendirici serum.",
+"Eucerin Hyaluron-Filler Gündüz Kremi SPF 15, 50 ml": "Hyalüronik asit içeren, kırışıklık karşıtı gündüz bakım kremi. Güneşten koruma faktörlüdür.",
+"Caudalie Vinoperfect Serum, 30 ml": "Leke görünümüne karşı aydınlatıcı yüz serumu.",
+"Solante Antiox SPF 50+ Güneş Losyonu, 150 ml": "Antioksidan içerikli, çok yüksek korumalı güneş losyonu. Yüz ve vücut için.",
+"Solante Acnes SPF 50 Güneş Losyonu, 150 ml": "Akneye eğilimli ciltler için yüksek korumalı güneş losyonu.",
+"Bio-Oil, 125 ml": "İz ve çatlak görünümüne karşı kullanılan bakım yağı. Hamilelik döneminde de sık tercih edilir.",
+"Sterimar Burun Spreyi, 100 ml": "Deniz suyu bazlı burun spreyi. Burnun temizlenmesine ve nemlendirilmesine yardımcı olur.",
+"Bepanthol Baby Pişik Kremi": "Bebeklerin bez bölgesini korumak için her bez değişiminde sürülen pişik kremi. 30 g ve 100 g büyük boy seçenekleri var.",
+"Sudocrem": "Bebeklerde bez bölgesi bakımında yaygın kullanılan koruyucu krem.",
+"R.O.C.S. Kids Florürsüz Çocuk Diş Macunu, 3-7 yaş, 45 g": "3-7 yaş çocuklar için florür içermeyen, meyve tadında diş macunu.",
+"Bepanthol Derma Merhem, 30 g": "Kuru, çatlamış ciltler için yoğun bakım merhemi.",
+"Bepanthol Cilt Bakım Kremi, 30 g": "Kuru ve hassas ciltler için günlük bakım kremi.",
+"Bepanthol Sensiderm": "Kaşıntılı, kızarık ve hassas ciltler için bakım kremi. 20 g ve 50 g boyları var.",
+"Marvis Jasmin Mint Diş Macunu, 25 ml": "İtalyan Marvis'in yasemin ve nane aromalı diş macunu. 25 ml seyahat boyu.",
+"Signal White Now Beyazlatıcı Diş Macunu, 75 ml": "Dişlerde anında beyaz görünüm için diş macunu.",
+"R.O.C.S. Coffee & Tobacco Diş Macunu, 74 g": "Kahve ve sigara lekelerine karşı diş macunu.",
+"Oral-B Essential Floss Naneli Diş İpi, 50 m": "Mumlu, naneli diş ipi. 50 metre.",
+"TePe Arayüz Fırçası 0,8 mm (Size 5), 8'li": "Diş aralarını temizlemek için 0,8 mm arayüz fırçası. 8'li paket.",
+"Roll Bant Topuk Bandı, 4 adet": "Ayakkabı vurmasına karşı topuk bandı. 4 adet.",
+"Tuba Salisilik Asitli Nasır Bandı, 6 adet": "Salisilik asitli nasır bandı. 6 adet.",
+"Art de Huile Fly Mix Vücut Spreyi, 120 ml": "Sinek ve sivrisineklere karşı vücuda sıkılan sprey.",
+"Bağışıklık Seti (C Vitamini + Çinko + Propolis + D3)": "C vitamini, çinko, propolis ve D3 vitamini ürünlerini bir arada sunan Hey Farmela seti.",
+"Mineral İkilisi (İyot Damla + Selenyum)": "İyot damla ve selenyum takviyesini bir arada sunan set.",
+"Çocuk Kemik & Mineral Seti (Pharmaton Kiddi + Ocean Tutti Frutti Şurup)": "Pharmaton Kiddi şurup ve Ocean Tutti Frutti balık yağı şurubundan oluşan çocuk seti.",
+"Bebek Başlangıç Seti (Bepanthol + Emzik + Biberon Emziği + Diş Kaşıyıcı)": "Yeni bebek için pişik kremi, emzik, biberon emziği ve diş kaşıyıcıdan oluşan set.",
+"Ağız Bakım Seti (3 Macun + Diş İpi + Fırça)": "3 diş macunu, diş ipi ve diş fırçasından oluşan ağız bakım seti.",
+"El & Cilt Bakım Seti (Vaseline + Oje + Makyaj Pamuğu)": "Vaseline 400 ml, oje ve makyaj pamuğundan oluşan bakım seti.",
+"Supradyn Koenzim Q10 Film Kaplı Tablet": "Bayer'in Supradyn serisinden; vitaminler, mineraller ve koenzim Q10 bir arada. Yoğun tempoda günlük multivitamin arayanlar için.",
+"Orzax Ocean Daily One Energy, 30 tablet": "Günde tek tablet multivitamin ve multimineral. İçeriğinde Kore ginsengi ve koenzim Q10 da bulunur; 11 yaş ve üzeri içindir.",
+"New Life EFA S-1200 Omega 3, 45 kapsül": "Her kapsülde 1200 mg balık yağı ve 720 mg Omega-3 (EPA ve DHA) bulunan yumuşak kapsül.",
+"New Life 4 Hepa, 30 kapsül": "Devedikeni etken maddesi silibin, enginar yaprağı ve karahindiba kökü ekstresi ile kolin içeren yumuşak kapsül. İtalya'da üretilir.",
+"İmuneks İnflamax Zerdeçal, 60 kapsül": "Zerdeçal ekstresi (kurkumin) içeren kapsül. Yetişkinler içindir.",
+"Youplus Vitamin C 1000 mg, Çinko, Propolis, 20 efervesan tablet": "Her tablette 1000 mg C vitamini, 10 mg çinko ve propolis bulunan efervesan tablet. Suda eritilerek içilir.",
+"Supradyn Energy Focus, 30 film kaplı tablet": "Vitaminler, mineraller ve ginseng içeren film kaplı tablet. Yetişkinlerde günde 1 tablet olarak kullanılır.",
+"Sambucol Plus, 15 efervesan tablet": "Kara mürver ekstresi, C vitamini ve çinko içeren efervesan tablet. 11 yaş ve üzeri içindir.",
+"Orzax Bigflor Probiyotik, 10 saşe": "Probiyotik karışımı içeren saşe. Yetişkinler için.",
+"Vitafenix Cognifenix, 40 kapsül": "Fosfatidilserin ve sitikolin içeren kapsül. Odaklanma ve zihinsel yoğunluk dönemlerinde tercih edilir.",
+"La Roche-Posay Anthelios UVmune 400 SPF 50+, 50 ml": "Yüz için çok yüksek korumalı güneş koruyucu. Hassas ciltlere uygun hafif doku.",
+"Gifrer Serum Fizyolojik, 40 flakon x 5 ml": "Tek kullanımlık flakonlarda serum fizyolojik. Bebeklerde burun ve göz temizliği için.",
+"Undo Talk Pudra, 100 g": "Cildin kıvrım bölgelerinde fazla nemi emmeye yardımcı talk pudrası. Yüz ve solunum yolundan uzak, ince bir tabaka halinde serpilir.",
+"Nutrigen Üzüm Pediatrik Şurup, 200 ml": "Çocuklar için üzüm çekirdeği ekstreli, vitamin ve mineral içeren şurup.",
+"Möller's Omega-3 Şurup": "Norveç kaynaklı balık yağı şurubu. Çocuklar ve yetişkinler kullanabilir. 150 ml Tutti Frutti ve 250 ml Limon aromalı seçenekleri var.",
+"Multi Jelly Jelibon, 20 g": "Çocuklar için vitamin içeren jelibon.",
+"Hyper Immun 44 Şurup, 150 ml": "Aserola ve turunç ekstresi ile vitamin ve mineraller içeren şurup. 4-10 yaş çocuklar için günlük kullanım önerilir.",
+"Orzax Ocean Multi Ballı Şurup, 150 ml": "Çocuklar için ballı portakal aromalı şurup; 11 vitamin, 5 mineral ve Omega-3 içerir. Renklendirici, tatlandırıcı ve yapay aroma içermez.",
+"Argivit Focus Şurup, 150 ml": "Fosfatidilserin, L-arjinin, vitamin ve mineraller içeren çocuk şurubu. Genellikle 4-10 yaş için önerilir.",
+"Orzax Ocean Microfer Damla, 30 ml": "Demir içeren damla takviye. Damla formu, küçük çocuklarda ve tablet yutamayanlarda pratiktir.",
+"Orzax İmunol Şurup, 150 ml": "Ekinezya, beta-glukan, propolis, C vitamini ve çinko içeren ballı çilek aromalı çocuk şurubu. Renklendirici ve tatlandırıcı içermez.",
+"Imumax Baby & Kids Boğaz Spreyi 3+ yaş, 20 ml": "3 yaş üzeri çocuklar için ağız ve boğaz bakım spreyi.",
+"iMom Omega 3, 30 kapsül": "Hamilelik ve emzirme dönemi için Omega-3 (DHA, EPA), folik asit, iyot ve D vitamini içeren kapsül.",
+"Mustela Çatlak Önleyici Yağ, 105 ml": "Hamilelikte cildin esnekliğini desteklemek için kullanılan bakım yağı.",
+"Curaprox Kids Ultra Soft Diş Fırçası, 4-12 yaş, 1 adet": "4-12 yaş çocuklar için ultra yumuşak kıllı diş fırçası.",
+"Oral-B Junior Diş Fırçası, 6-12 yaş, ekstra yumuşak, 1 adet": "6-12 yaş çocuklar için ekstra yumuşak diş fırçası.",
+"Corega Süper Naneli Protez Yapıştırıcı Krem, 40 g": "Takma dişleri gün boyu yerinde tutmaya yardımcı, naneli protez yapıştırıcı krem.",
+"Corega 3 Dakikada Temizleyici, 30 tablet": "Takma dişleri 3 dakikada temizleyen efervesan tablet. Günde bir kullanımla 30 günlük ambalaj.",
+"Sebamed İntim Jel, 200 ml": "Genital bölgenin günlük temizliği için uygun pH'lı jel.",
+"Phytorelief CC Pastil, 12 adet": "Boğaz ve ses için bitkisel içerikli pastil.",
+"Bepanthol Anti-Scar Jel, 20 g": "Yara izlerinin görünümüne karşı kullanılan jel.",
+"Meditech Arnica Jel, 75 g": "Arnika, mentol ve metil laktat içeren, sürüldüğü yerde serinlik hissi veren masaj jeli. Süngerli başlığı ile kolay uygulanır.",
+"Hametol Onarıcı Bakım Kremi, 30 g": "Hamamelis (cadı fındığı), hyalüronik asit, shea yağı ve E vitamini içeren onarıcı bakım kremi. Kuru bölgelerde el, yüz ve vücutta kullanılır.",
+"Oral-B Pro-Expert Arayüz Fırçası Başlangıç Kiti, 1 set": "Diş arası temizliği için sap ve farklı boy fırça başlıkları içeren başlangıç seti.",
+"B-Good Dijital Ateş Ölçer, 1 adet": "Dijital ekranlı ateş ölçer (termometre)."
+};
+const CATS = [["t","Vitamin & Takviye"],["c","Cilt Bakımı"],["a","Anne & Çocuk"],["k","Kişisel Bakım"],["s","Hazır Setler"]];
+const FREE_FROM = 900, FEE = 150;
+const AREAS = ["Nişantaşı","Bomonti","Kurtuluş","Başka semt"];
+const ICON = {
+  pop:'<path d="M50 12l11 24 26 3-19 18 5 26-23-13-23 13 5-26-19-18 26-3Z"/>',
+  all:'<rect x="14" y="14" width="30" height="30" rx="6"/><rect x="56" y="14" width="30" height="30" rx="6"/><rect x="14" y="56" width="30" height="30" rx="6"/><rect x="56" y="56" width="30" height="30" rx="6"/>',
+  t:'<path d="M30 70 70 30a14 14 0 0 0-20-20L10 50a14 14 0 0 0 20 20Z"/><path d="m30 30 20 20"/>',
+  c:'<rect x="32" y="34" width="36" height="52" rx="8"/><path d="M40 34V22h20v12M42 14h16v8H42z"/>',
+  a:'<path d="M38 34h24v6l4 6v38a6 6 0 0 1-6 6H40a6 6 0 0 1-6-6V46l4-6Z"/><path d="M42 34v-8a8 8 0 0 1 16 0v8M34 58h32"/>',
+  k:'<path d="M50 84s-28-16-28-38a15 15 0 0 1 28-8 15 15 0 0 1 28 8c0 22-28 38-28 38Z"/>',
+  s:'<rect x="18" y="40" width="64" height="44" rx="4"/><path d="M14 30h72v12H14zM50 30v54M50 30c-6-12-20-14-20-4 0 4 8 4 20 4 12 0 20 0 20-4 0-10-14-8-20 4"/>'
+};
+
+// Everyday words people type, mapped onto product names (search forgives the wording)
+const SYN = [[/omega|fish|easyfish|moller/,"balik yagi"],[/d3|vitamin d/,"d vitamini"],[/spf|photoderm|anthelios|solante/,"gunes kremi koruyucu"],[/mag/,"magnezyum"],[/redoxon|c vitamini|vitamin c|max c/,"c vitamini"],[/zinc|cinko/,"cinko"],[/collagen|kolajen/,"kolajen"],[/probiyotik|flor/,"probiyotik bagirsak"],[/dis |fircasi|macun|floss|interdental|tepe|curaprox|marvis|signal|r o c s/,"dis agiz"],[/corega/,"protez"],[/bepanthol|sudocrem/,"pisik krem"],[/glucosamine|cosakondrin|art max|kartix|osteocare/,"eklem kemik"],[/biotin|medohbiotin/,"sac tirnak"],[/b12|methylcobalamin/,"b12 vitamini"],[/cerave|atoderm|lipikar|nemlendirici/,"nemlendirici krem"],[/temizle|foaming|h2o|misel/,"yuz temizleme"],[/sterimar|serum fizyolojik/,"burun"],[/sirup|damla/,"cocuk"]];
+
+
+// ---- Search keywords: [pattern in product name, words people may type]. Add freely; Turkish letters are fine.
+const KW = [
+ [/ocean plus omega|balen|efa s|easyfish|solgar omega/,"balık yağı omega3 kalp beyin"],
+ [/kartix|cosakondrin|art max/,"eklem kıkırdak diz ağrı glukozamin"],
+ [/supradyn q10/,"multivitamin enerji yorgunluk koenzim"],
+ [/supradyn energy/,"multivitamin enerji yorgunluk odaklanma"],
+ [/supradyn focus/,"multivitamin odaklanma hafıza"],
+ [/daily one/,"multivitamin enerji günlük"],
+ [/ocuvite/,"göz görme lutein"],
+ [/osteocare/,"kemik kalsiyum magnezyum d vitamini"],
+ [/redoxon/,"c vitamini bağışıklık grip soğuk algınlığı efervesan"],
+ [/d3k2/,"d vitamini k2 kemik damla"],
+ [/extramag|mag4|magnimore|magnesium/,"magnezyum kas kramp uyku"],
+ [/polysitol/,"inositol kadın hormon"],
+ [/passiflora/,"uyku rahatlama stres bitkisel"],
+ [/b12/,"b12 vitamini enerji"],
+ [/4 hepa/,"karaciğer"],
+ [/solgar vitamin d3/,"d vitamini kemik"],
+ [/vitamin max/,"c vitamini d vitamini çinko bağışıklık"],
+ [/quercetin/,"kuersetin bağışıklık"],
+ [/imuneks|vitaglucan/,"beta glukan bağışıklık"],
+ [/inflamax/,"zerdeçal kurkumin eklem"],
+ [/youplus/,"c vitamini çinko propolis bağışıklık"],
+ [/collagen/,"kolajen cilt saç tırnak eklem"],
+ [/biotin/,"biotin saç tırnak dökülme"],
+ [/sambucol/,"kara mürver bağışıklık grip"],
+ [/bigflor|denflor/,"probiyotik bağırsak sindirim"],
+ [/effaclar|sebium|acnes/,"akne sivilce yağlı cilt"],
+ [/temizleme jeli|foaming|koparen|kopuren|tanisma/,"yüz temizleme yüz yıkama"],
+ [/cicaplast|cicalfate/,"onarıcı krem tahriş yara pişik"],
+ [/anthelios|photoderm|solante/,"güneş kremi koruyucu spf"],
+ [/hyalu|mineral 89/,"serum hyaluronik nem"],
+ [/lipikar|atoderm|cerave nemlendirici/,"kuru cilt nemlendirici atopik egzama vücut"],
+ [/sebium hydra/,"nemlendirici"],
+ [/sensibio/,"hassas cilt"],
+ [/h2o/,"misel su makyaj temizleme"],
+ [/termal su/,"termal su hassas cilt sprey"],
+ [/eucerin/,"kırışıklık yaşlanma gündüz kremi"],
+ [/vinoperfect/,"leke aydınlatıcı serum"],
+ [/bio oil|mustela/,"çatlak iz hamilelik yağ"],
+ [/sterimar/,"burun spreyi tıkanıklık deniz suyu"],
+ [/bepanthol baby|sudocrem|talk pudra/,"pişik bebek krem"],
+ [/gifrer/,"serum fizyolojik burun göz bebek"],
+ [/nutrigen|multi jelly|ocean multi/,"çocuk multivitamin vitamin iştah"],
+ [/moller/,"çocuk balık yağı omega3"],
+ [/hyper immun|imunol/,"çocuk bağışıklık"],
+ [/argivit/,"çocuk gelişim odaklanma"],
+ [/microfer/,"demir damla bebek"],
+ [/imumax/,"boğaz ağrısı sprey"],
+ [/imom/,"hamilelik emzirme omega3"],
+ [/curaprox|oral b junior/,"çocuk diş fırçası"],
+ [/kids florursuz/,"çocuk diş macunu"],
+ [/corega super/,"protez yapıştırıcı takma diş"],
+ [/corega 3/,"protez temizleme takma diş"],
+ [/intim/,"genital hijyen kadın"],
+ [/phytorelief/,"boğaz pastil öksürük ses"],
+ [/bepanthol derma|bepanthol cilt/,"kuru cilt çatlak el kremi dudak"],
+ [/sensiderm/,"kaşıntı egzama hassas cilt"],
+ [/anti scar/,"yara izi"],
+ [/arnica/,"morluk çürük ezik şişlik"],
+ [/marvis|signal|coffee/,"diş macunu"],
+ [/signal|coffee/,"beyazlatma leke"],
+ [/floss/,"diş ipi"],
+ [/tepe|interdental|arayuz/,"diş arası arayüz fırçası"],
+ [/topuk/,"topuk bandı ayakkabı vurma"],
+ [/nasir/,"nasır ayak"],
+ [/ates olcer/,"ateş ölçer termometre derece"],
+ [/fly mix/,"sinek sivrisinek kovucu"],
+ [/bagisiklik seti/,"bağışıklık c vitamini çinko"],
+ [/mineral ikilisi/,"iyot selenyum tiroid"],
+ [/cocuk kemik/,"çocuk kemik gelişim"],
+ [/serenita/,"uyku rahatlama kediotu valerian stres bitkisel"],
+ [/angard/,"glutatyon antioksidan"],
+ [/cognifenix/,"hafıza odaklanma sitikolin fosfatidilserin"],
+ [/magna p/,"magnezyum"],
+ [/hametol/,"kuru cilt onarıcı krem hamamelis"]
+];
+const norm = s => s.toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ");
+const idOf = s => norm(s).trim().replace(/\s+/g,"-");
+const items = DATA.map(([name,cat,price,pop,img,sizes]) => {
+  const vars = sizes ? sizes.map(([label,price,img]) => ({label,price,img})) : null;
+  const k = norm(name) + (vars ? " " + vars.map(v => norm(v.label)).join(" ") : "");
+  const extra = SYN.concat(KW).filter(([re]) => re.test(k + " ")).map(([,w]) => norm(w)).join(" ");
+  const key = (k+" "+extra+" "+norm(CATS.find(c=>c[0]===cat)[1])).replace(/\s+/g," ");
+  const desc = DESC[name] || "";
+  const fullKey = key + " " + norm(desc);
+  return {id:idOf(name),name,cat,price,pop:!!pop,img,vars,desc,key:fullKey,tokens:[...new Set(fullKey.split(" ").filter(Boolean))]};
+});
+const byId = Object.fromEntries(items.map(i => [i.id,i]));
+/* A list entry is "product-id" or, for products with sizes, "product-id~sizeIndex" */
+function line(key){
+  const [id, vi] = String(key).split("~"), i = byId[id];
+  if (!i) return null;
+  if (!i.vars) return vi == null ? {key, item:i, name:i.name, price:i.price, img:i.img} : null;
+  const v = i.vars[+vi];
+  return v ? {key, item:i, name:`${i.name}, ${v.label}`, label:v.label, price:v.price, img:v.img} : null;
+}
+const inListCount = i => i.vars ? i.vars.reduce((a,_,n) => a + (cart[i.id+"~"+n] || 0), 0) : (cart[i.id] || 0);
+const tl = n => n.toLocaleString("tr-TR",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2}) + " TL";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $ = s => document.querySelector(s);
+const store = {
+  get(k,d){ try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch(e){ return d; } },
+  set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+
+let cart = store.get("heyfarmela-liste", {});
+[["Balen Omega 3 Norveç Balık Yağı 1380 mg, 100 kapsül","Balen Omega 3 Norveç Balık Yağı 1380 mg",0],["Balen Omega 3 Norveç Balık Yağı 1380 mg, 200 kapsül","Balen Omega 3 Norveç Balık Yağı 1380 mg",1],
+ ["Orzax Ocean ExtraMag 200 mg, 30 tablet","Orzax Ocean ExtraMag 200 mg",0],["Orzax Ocean ExtraMag 200 mg, 60 tablet","Orzax Ocean ExtraMag 200 mg",1],
+ ["Bepanthol Baby Pişik Kremi, 30 g","Bepanthol Baby Pişik Kremi",0],["Bepanthol Baby Pişik Kremi, 100 g","Bepanthol Baby Pişik Kremi",1],
+ ["Möller's Omega-3 Şurup, 250 ml","Möller's Omega-3 Şurup",1],["Bepanthol Sensiderm, 20 g","Bepanthol Sensiderm",0],
+ ["Orzax Ocean Plus Omega 3 1200 mg, 30 kapsül","Orzax Ocean Plus Omega 3 1200 mg",0],["Supradyn Koenzim Q10, 30 film kaplı tablet","Supradyn Koenzim Q10 Film Kaplı Tablet",0],
+ ["Osteocare, 90 tablet","Osteocare",1],["Redoxon 3'lü Etki, 15 efervesan tablet","Redoxon 3'lü Etki Efervesan Tablet",0],
+ ["Solgar Methylcobalamin B12 1000 mcg, 30 tablet","Solgar Methylcobalamin B12 1000 mcg",0],["Solgar Omega-3 Triple Strength, 50 kapsül","Solgar Omega-3 Triple Strength 950 mg",0],
+ ["Magnimore Plus, 60 tablet","Magnimore Plus",1],["Sudocrem, 125 g","Sudocrem",0]
+].forEach(([o,n,v]) => { const ok = idOf(o), nk = idOf(n)+"~"+v; if (cart[ok]) { cart[nk] = (cart[nk]||0) + cart[ok]; delete cart[ok]; } });
+Object.keys(cart).forEach(k => { if (!line(k)) delete cart[k]; });
+let who = store.get("heyfarmela-kisi", {name:"",area:"",how:""});
+let cat = "all", query = "", sent = false;
+
+/* ---------- Text size ---------- */
+function applySize(big){ document.body.classList.toggle("big", big); $("#textsize").setAttribute("aria-pressed", big); $("#textsize").lastChild.textContent = big ? " Yazıyı küçült" : " Yazıyı büyüt"; }
+applySize(store.get("heyfarmela-buyuk", false));
+$("#textsize").addEventListener("click", () => { const big = !document.body.classList.contains("big"); applySize(big); store.set("heyfarmela-buyuk", big); });
+
+/* ---------- Catalogue ---------- */
+const svg = k => `<svg viewBox="0 0 100 100" aria-hidden="true">${ICON[k]}</svg>`;
+function renderCats(){
+  const tiles = [["pop","Çok tercih edilenler"],...CATS,["all","Tüm ürünler"]];
+  $("#cats").innerHTML = tiles.map(([k,l]) => `<button class="cat${k==="all"?" wide":""}" type="button" data-cat="${k}" aria-pressed="${k===cat}">${svg(k)}<span>${l}</span></button>`).join("");
+}
+const pic = i => i.img
+  ? `<img class="pic" src="img/${i.img}.jpg" alt="" width="300" height="300" loading="lazy" decoding="async">`
+  : `<div class="pic icon" aria-hidden="true">${svg(i.cat)}</div>`;
+function card(i){
+  if (i.vars) return sizedCard(i);
+  const q = cart[i.id];
+  const price = i.price != null ? `<span class="price">${tl(i.price)}</span>` : `<span class="price-ask">Fiyatını WhatsApp'tan yazarız</span>`;
+  const act = q
+    ? `<div class="inlist"><span class="state">✓ Listenizde</span><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${i.id}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${i.id}" aria-label="Bir artır">+</button></div></div>`
+    : `<button type="button" class="add" data-add="${i.id}">+ Listeye ekle</button>`;
+  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}<span class="more">Ürün bilgisi ›</span></span></button>${act}</article>`;
+}
+
+/* Products with sizes: the list shows the smallest size's photo; the size is chosen on the product page */
+/* Tablets/capsules/sachets are a "miktar" choice, ml/g a "boyut" choice */
+const optWord = i => i.vars.some(v => /kapsül|tablet|saşe|adet/i.test(v.label)) ? "miktar" : "boyut";
+const cap = w => w[0].toLocaleUpperCase("tr") + w.slice(1);
+function sizedCard(i){
+  const q = inListCount(i);
+  const known = i.vars.filter(v => v.price != null).map(v => v.price);
+  const price = known.length ? `<span class="price">${known.length > 1 ? tl(Math.min(...known)) + " – " + tl(Math.max(...known)) : tl(known[0])}</span>` : `<span class="price-ask">Fiyatını WhatsApp'tan yazarız</span>`;
+  const sizes = `<span class="sizes">${i.vars.length} ${optWord(i)} seçeneği: ${i.vars.map(v => esc(v.label)).join(" / ")}</span>`;
+  const act = (q ? `<div class="inlist"><span class="state">✓ Listenizde (${q} adet)</span></div>` : "") +
+    `<button type="button" class="add" data-open="${i.id}">${q ? "Seçenekleri gör ›" : cap(optWord(i)) + " seçin ›"}</button>`;
+  return `<article class="card${q?" on":""}" id="p-${i.id}"><button type="button" class="top open" data-open="${i.id}" aria-label="${esc(i.name)}: ürün bilgisi ve seçenekler">${pic(i)}<span class="tx">${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}<span class="name">${esc(i.name)}</span>${price}${sizes}<span class="more">Ürün bilgisi ›</span></span></button>${act}</article>`;
+}
+
+/* Typo tolerance: a word matches if it appears as written, or is one or two letters off from a word in the name or keywords */
+function dist(a,b){
+  const m=a.length,n=b.length; if (Math.abs(m-n)>2) return 9;
+  const d=[]; for(let i=0;i<=m;i++){ d[i]=[i]; } for(let j=1;j<=n;j++) d[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++){
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+    if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1]) d[i][j]=Math.min(d[i][j],d[i-2][j-2]+1);
+  }
+  return d[m][n];
+}
+function wordScore(item, w){
+  if (item.key.includes(w)) return 2;
+  if (w.length < 4) return 0;
+  const lim = w.length >= 7 ? 2 : 1;
+  for (const t of item.tokens){
+    if (t.length < 3) continue;
+    if (t.length >= 4 && w.startsWith(t)) return 1.5; // Turkish endings: "ağrısı" finds "ağrı"
+    if (dist(w,t) <= lim || (t.length > w.length && dist(w, t.slice(0, w.length)) <= 1)) return 0.5;
+  }
+  return 0;
+}
+function matchScore(item, words){
+  let s = 0;
+  for (const w of words){ const x = wordScore(item, w); if (!x) return 0; s += x; }
+  return s;
+}
+function renderCatalog(){
+  const STOP = new Set(["icin","ve","ile","olan","en","iyi","bir","bu","var","mi","mu","lazim","istiyorum","ariyorum","urun","urunu","ilac","icin"]);
+  const words = norm(query).trim().split(" ").filter(w => w.length > 1 && !STOP.has(w));
+  let list = items;
+  const phrase = norm(query).trim();
+  let fuzzy = false;
+  if (words.length){
+    const exact = list.filter(i => i.key.includes(phrase));
+    if (exact.length) list = exact;
+    else {
+      const scored = list.map(i => [i, matchScore(i, words)]).filter(([,s]) => s > 0);
+      fuzzy = scored.some(([,s]) => s % 1 !== 0);
+      list = scored.sort((a,b) => b[1]-a[1] || b[0].pop-a[0].pop).map(([i]) => i);
+    }
+  }
+  else if (cat === "pop") list = list.filter(i => i.pop);
+  else if (cat !== "all") list = list.filter(i => i.cat === cat);
+  const title = words.length ? `"${esc(query.trim())}" araması` : cat === "pop" ? "Çok tercih edilenler" : cat === "all" ? "Tüm ürünler" : CATS.find(c => c[0]===cat)[1];
+  const showAll = words.length || cat !== "all";
+  $("#resbar").innerHTML = `<h2>${title} <span class="count">${list.length} ürün</span></h2>` + (showAll ? `<button type="button" class="showall" data-reset="1">Tümünü göster</button>` : "") + (fuzzy && list.length ? `<p class="qhint" style="width:100%;margin:0">Yazdığınıza en yakın ürünleri gösteriyoruz.</p>` : "");
+  let html = "";
+  if (!list.length){
+    html = `<div class="empty"><b>Bu isimle bir ürün bulamadık.</b><br>Yazımı değiştirmeyi deneyin ya da aşağıdaki düğmeyle bize sorun. Çoğu ürünü getirebiliyoruz.</div>`;
+  } else if (cat === "all" && !words.length){
+    CATS.forEach(([k,l]) => { const g = list.filter(i => i.cat === k); if (g.length) html += `<h3 class="group">${l}</h3><div class="list">${g.map(card).join("")}</div>`; });
+  } else {
+    html = `<div class="list">${list.map(card).join("")}</div>`;
+  }
+  $("#catalog").innerHTML = html;
+}
+
+/* ---------- List state, bar, toast ---------- */
+const count = () => Object.values(cart).reduce((a,b) => a+b, 0);
+function totals(){
+  let known = 0, unknown = 0;
+  Object.entries(cart).forEach(([k,q]) => { const l = line(k); if (l.price != null) known += l.price*q; else unknown++; });
+  return {known, unknown};
+}
+function renderBar(){
+  const n = count();
+  $("#bar").hidden = n === 0;
+  const up = $("#up"); up.style.bottom = n ? `calc(${$("#bar").offsetHeight}px + 1em)` : "1.2em";
+  if (!n) return;
+  const t = totals();
+  $("#barCount").textContent = `Listenizde ${n} ürün`;
+  $("#barTotal").textContent = t.known ? tl(t.known) + (t.unknown ? " +" : "") : "";
+  $("#openSheet").textContent = "Listemi gör ve gönder";
+}
+let toastTimer, undoFn = null;
+function toast(msg, undo){
+  clearTimeout(toastTimer);
+  $("#toastMsg").textContent = msg;
+  undoFn = undo || null;
+  $("#toastUndo").hidden = !undo;
+  const t = $("#toast"); t.hidden = false;
+  t.style.bottom = count() && $("#sheet").hidden && $("#detail").hidden ? `calc(${$("#bar").offsetHeight}px + .8em)` : "1.2em";
+  toastTimer = setTimeout(() => { t.hidden = true; undoFn = null; }, undo ? 6000 : 2500);
+}
+$("#toastUndo").addEventListener("click", () => { if (undoFn) undoFn(); $("#toast").hidden = true; undoFn = null; });
+function save(){ store.set("heyfarmela-liste", cart); }
+function refresh(){ save(); renderCatalog(); renderBar(); if (!$("#sheet").hidden) renderSheet(); if (!$("#detail").hidden) renderDetail(); }
+
+/* ---------- Review sheet ---------- */
+function message(){
+  const lines = Object.entries(cart).map(([k,q]) => { const l = line(k); return `• ${l.name} x${q}` + (l.price != null ? ` (${tl(l.price*q)})` : " (fiyat sorulacak)"); });
+  const t = totals();
+  let txt = "Merhaba Hey Farmela, ön sipariş vermek istiyorum:\n" + lines.join("\n");
+  if (t.known) txt += `\n\nFiyatı belli olanların toplamı: ${tl(t.known)}`;
+  txt += `\n\nAdım: ${who.name.trim() || "..."}`;
+  txt += `\nSemt: ${who.area || "..."}`;
+  txt += `\nTeslimat: ${who.how === "eve" ? "Eve getirin" : who.how === "eczane" ? "Eczaneden kendim alacağım" : "..."}`;
+  return txt;
+}
+const waLink = text => `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
+function choice(name, value, label, checked){ return `<label class="choice"><input type="radio" name="${name}" value="${value}" ${checked?"checked":""}><span>${label}</span></label>`; }
+function renderSheet(){
+  const ids = Object.keys(cart);
+  const body = $("#sheetBody");
+  if (sent){
+    body.innerHTML = `<div class="after"><h3>WhatsApp açıldı</h3>
+      <p>Siparişiniz bize ancak WhatsApp'ta <b>gönder</b> tuşuna bastığınızda ulaşır.</p>
+      <ol><li>WhatsApp'ta mesajınız yazılı duruyor.</li><li>Sağ alttaki yeşil <b>ok</b> işaretine basın.</li><li>Fiyatı ve teslim saatini size yazacağız.</li></ol>
+      <div class="row2"><button type="button" class="primary" data-done="1">Gönderdim, listeyi temizle</button>
+      <a class="ghost" style="display:flex;align-items:center;justify-content:center;text-decoration:none" href="${waLink(message())}" target="_blank" rel="noopener">WhatsApp'ı tekrar aç</a>
+      <button type="button" class="ghost" data-edit="1">Listeyi düzenle</button></div></div>`;
+    return;
+  }
+  if (!ids.length){
+    body.innerHTML = `<p class="stepline">Listeniz boş</p><div class="empty">Ürünlerde <b>Listeye ekle</b> düğmesine basın, buraya gelsinler.</div><button type="button" class="ghost" style="width:100%;margin-top:1em" data-close="1">Ürünlere dön</button>`;
+    return;
+  }
+  const t = totals();
+  let hint = "";
+  if (t.known >= FREE_FROM) hint = "Teslimat ücretsiz.";
+  else if (t.known > 0) hint = `${tl(FREE_FROM - t.known)} daha eklerseniz teslimat ücretsiz olur. Şu an teslimat ${FEE} TL (eczaneden alırsanız ücret yok).`;
+  if (t.unknown) hint += (hint ? " " : "") + `${t.unknown} ürünün fiyatını WhatsApp'tan yazacağız.`;
+  body.innerHTML =
+    `<p class="stepline">1 · Ürünleri kontrol edin</p>` +
+    ids.map(id => { const i = line(id), q = cart[id]; return `<div class="line"><span class="n">${i.label ? esc(i.item.name) + ` <span class="vchip">${esc(i.label)}</span>` : esc(i.name)}</span><span class="p">${i.price!=null ? tl(i.price*q) : "fiyat sorulacak"}</span>
+      <div class="ctl"><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${id}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${id}" aria-label="Bir artır">+</button></div><button type="button" class="rm" data-rm="${id}">Listeden çıkar</button></div></div>`; }).join("") +
+    `<div class="totals">${t.known ? `<div class="row big"><span>Toplam</span><span>${tl(t.known)}${t.unknown ? " +" : ""}</span></div>` : ""}<p class="hint">${hint}</p></div>` +
+    `<p class="stepline">2 · Size nasıl ulaşalım?</p>` +
+    `<div class="field"><label class="t" for="name">Adınız <span class="opt">(isteğe bağlı)</span></label><input id="name" type="text" autocomplete="name" value="${esc(who.name)}" placeholder="Örn. Ayşe Hanım"></div>` +
+    `<fieldset class="field"><legend>Semtiniz</legend><div class="choices">${AREAS.map(a => choice("area", a, a, who.area===a)).join("")}</div></fieldset>` +
+    `<fieldset class="field"><legend>Nasıl almak istersiniz?</legend><div class="choices">${choice("how","eve","Eve getirin",who.how==="eve")}${choice("how","eczane","Eczaneden alırım",who.how==="eczane")}</div></fieldset>` +
+    `<p class="stepline">3 · Gönderin</p>` +
+    `<a class="primary" id="sendWa" href="${waLink(message())}" target="_blank" rel="noopener">WhatsApp ile gönder</a>` +
+    `<p class="small">Şimdi ödeme alınmaz. Mesajınız WhatsApp'ta yazılı açılır, sadece gönder'e basarsınız.</p>`;
+}
+let detailId = null, detailVar = 0;
+const isSupp = i => i.cat === "t" || /şurup|damla|jelibon|omega|probiyotik/i.test(i.name);
+function renderDetail(){
+  const i = byId[detailId]; if (!i) return;
+  const pending = !!i.vars && detailVar < 0;
+  const key = pending ? null : i.vars ? `${i.id}~${detailVar}` : i.id;
+  const cur = pending ? {item:i, name:i.name, label:null, price:null, img:i.vars[0].img} : line(key), q = key ? cart[key] : 0;
+  const big = cur.img ? `<img class="dpic" src="img/${cur.img}.jpg" alt="${esc(cur.name)}" width="300" height="300">` : `<div class="dpic icon" aria-hidden="true">${svg(i.cat)}</div>`;
+  const sizes = i.vars ? `<p class="vlabel" id="vlab">${cap(optWord(i))} seçin</p><div class="vopts" role="group" aria-labelledby="vlab">` +
+    i.vars.map((v,n) => { const inl = cart[i.id+"~"+n]; return `<button type="button" class="vopt" data-var="${n}" aria-pressed="${n===detailVar}">${n===detailVar ? "✓ " : ""}${esc(v.label)}<small>${v.price != null ? tl(v.price) : "fiyat sorulur"}${inl ? ` · ✓ listede ${inl}` : ""}</small></button>`; }).join("") + `</div>` + (pending ? `<p class="vsel need" id="vneed">Lütfen yukarıdan bir ${optWord(i)} seçin.</p>` : `<p class="vsel">Seçtiğiniz ${optWord(i)}: <b>${esc(cur.label)}</b></p>`) : "";
+  const known = pending ? i.vars.filter(v => v.price != null).map(v => v.price) : [];
+  const price = pending ? (known.length ? `<p class="price" style="font-size:1.2em;margin:.2em 0">${known.length > 1 ? tl(Math.min(...known)) + " – " + tl(Math.max(...known)) : tl(known[0])}</p>` : `<p class="price-ask" style="font-size:1em">Fiyatını WhatsApp'tan yazarız</p>`) : cur.price != null ? `<p class="price" style="font-size:1.5em;margin:.2em 0">${tl(cur.price)}</p>` : `<p class="price-ask" style="font-size:1em">Fiyatını WhatsApp'tan yazarız</p>`;
+  const act = q
+    ? `<div class="inlist"><span class="state">✓ Listenizde</span><div class="qty" role="group" aria-label="Adet"><button type="button" data-dec="${key}" aria-label="Bir azalt">−</button><span>${q} adet</span><button type="button" data-inc="${key}" aria-label="Bir artır">+</button></div></div>`
+    : pending ? `<button type="button" class="add need" data-need="1">Önce ${optWord(i)} seçin</button>`
+    : `<button type="button" class="add" data-add="${key}">+ Listeye ekle${i.vars ? ` (${esc(i.vars[detailVar].label)})` : ""}</button>`;
+  const note = isSupp(i)
+    ? "Takviye edici gıdadır, ilaç değildir. Kullanım miktarı için ambalajı okuyun. Hamilelik, emzirme, hastalık veya ilaç kullanımında önce doktorunuza ya da eczacınıza danışın."
+    : "Kullanmadan önce ambalajdaki talimatları okuyun. Sorunuz olursa eczacımıza WhatsApp'tan yazabilirsiniz.";
+  $("#detailBody").innerHTML = big +
+    `<p class="dcat">${CATS.find(c => c[0]===i.cat)[1]}</p><h3 class="dname">${esc(i.name)}</h3>${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}${sizes}${price}` +
+    `<p class="ddesc">${esc(i.desc || "Bu ürünle ilgili sorularınızı WhatsApp'tan yanıtlıyoruz.")}</p>` +
+    `<div class="dact">${act}<a class="ask-btn" style="margin:0" href="${waLink(`Merhaba Hey Farmela, ${cur.name} hakkında bir sorum var: `)}" target="_blank" rel="noopener">Bu ürünü eczacımıza sorun</a></div>` +
+    `<p class="dnote">${note}</p>`;
+}
+function openDetail(id, fromHistory){
+  if (!byId[id]) return;
+  if (detailId !== id) detailVar = -1;
+  detailId = id; renderDetail();
+  $("#detail").hidden = false; document.body.classList.add("locked"); $("#detail").scrollTop = 0;
+  if (!fromHistory && location.hash !== "#urun-" + id) history.pushState(null, "", "#urun-" + id);
+  $("#closeDetail").focus();
+}
+function closeDetail(fromHistory){
+  if ($("#detail").hidden) return;
+  $("#detail").hidden = true; detailId = null;
+  if ($("#sheet").hidden) document.body.classList.remove("locked");
+  if (!fromHistory && location.hash.startsWith("#urun-")) history.back();
+  const card = document.getElementById("p-" + (location.hash.slice(6) || ""));
+}
+$("#closeDetail").addEventListener("click", () => closeDetail(false));
+
+function openSheet(){
+  sent = false; renderSheet();
+  $("#sheet").hidden = false; document.body.classList.add("locked"); $("#sheet").scrollTop = 0;
+  if (location.hash !== "#liste") history.pushState(null, "", "#liste");
+  $("#closeSheet").focus();
+}
+function closeSheet(fromHistory){
+  if ($("#sheet").hidden) return;
+  $("#sheet").hidden = true; document.body.classList.remove("locked");
+  if (!fromHistory && location.hash === "#liste") history.back();
+  renderBar();
+}
+window.addEventListener("hashchange", () => {
+  const h = location.hash;
+  if (h.startsWith("#urun-")) { if ($("#detail").hidden || detailId !== h.slice(6)) openDetail(h.slice(6), true); } else closeDetail(true);
+  if (h === "#liste") { if ($("#sheet").hidden) openSheet(); } else closeSheet(true);
+});
+$("#openSheet").addEventListener("click", openSheet);
+$("#closeSheet").addEventListener("click", () => closeSheet(false));
+
+/* Keep name/area/choice and the WhatsApp text in step as the person fills the form */
+$("#sheetBody").addEventListener("input", e => {
+  if (e.target.id === "name") who.name = e.target.value;
+  if (e.target.name === "area") who.area = e.target.value;
+  if (e.target.name === "how") who.how = e.target.value;
+  store.set("heyfarmela-kisi", who);
+  const a = $("#sendWa"); if (a) a.href = waLink(message());
+});
+$("#sheetBody").addEventListener("click", e => {
+  if (e.target.closest("#sendWa")) { setTimeout(() => { sent = true; renderSheet(); $("#sheet").scrollTop = 0; }, 400); }
+});
+
+/* ---------- All clicks ---------- */
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const d = b.dataset;
+  if (d.var !== undefined){ detailVar = +d.var; renderDetail(); return; }
+  if (d.need){ const v = $("#vneed"); if (v){ v.classList.remove("flash"); void v.offsetWidth; v.classList.add("flash"); } const o = $("#detailBody .vopts"); if (o){ o.scrollIntoView({behavior:"smooth", block:"center"}); o.querySelector(".vopt").focus({preventScroll:true}); } return; }
+  if (d.open){ openDetail(d.open, false); return; }
+  if (d.cat){ cat = d.cat; query = ""; $("#q").value = ""; $("#qclear").hidden = true; renderCats(); renderCatalog(); $("#resbar").scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  if (d.reset){ cat = "all"; query = ""; $("#q").value = ""; $("#qclear").hidden = true; renderCats(); renderCatalog(); return; }
+  if (d.close){ closeSheet(false); return; }
+  if (d.edit){ sent = false; renderSheet(); return; }
+  if (d.done){ const before = {...cart}; cart = {}; save(); closeSheet(false); renderCatalog(); renderBar(); toast("Teşekkürler! Listeniz temizlendi.", () => { cart = before; refresh(); }); return; }
+  if (d.add){ cart[d.add] = 1; refresh(); toast("✓ Listeye eklendi"); return; }
+  if (d.inc){ cart[d.inc] = Math.min(20,(cart[d.inc]||0)+1); refresh(); return; }
+  if (d.dec || d.rm){
+    const id = d.dec || d.rm, before = cart[id];
+    if (d.dec && before > 1){ cart[id] = before - 1; refresh(); return; }
+    delete cart[id]; refresh();
+    toast(`${line(id).name} listeden çıkarıldı`, () => { cart[id] = before; refresh(); });
+  }
+});
+
+/* ---------- Search ---------- */
+let qTimer;
+$("#q").addEventListener("input", e => { query = e.target.value; $("#qclear").hidden = !query; clearTimeout(qTimer); qTimer = setTimeout(renderCatalog, 150); });
+$("#q").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); e.target.blur(); $("#resbar").scrollIntoView({behavior:"smooth",block:"start"}); } });
+$("#qclear").addEventListener("click", () => { query = ""; $("#q").value = ""; $("#qclear").hidden = true; renderCatalog(); $("#q").focus(); });
+
+/* ---------- Back to top ---------- */
+window.addEventListener("scroll", () => { $("#up").hidden = window.scrollY < 1400; }, {passive:true});
+$("#up").addEventListener("click", () => { $(".find").scrollIntoView({behavior:"smooth"}); });
+
+$("#askLink").href = waLink("Merhaba Hey Farmela, listede olmayan bir ürün soracaktım: ");
+/* Wider screens: click outside the window or press Esc to close */
+["#detail","#sheet"].forEach(sel => $(sel).addEventListener("click", e => { if (e.target === $(sel)) sel === "#detail" ? closeDetail(false) : closeSheet(false); }));
+document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!$("#detail").hidden) closeDetail(false); else if (!$("#sheet").hidden) closeSheet(false); });
+
+renderCats(); renderCatalog(); renderBar();
+if (location.hash === "#liste" && count()) openSheet();
+else if (location.hash.startsWith("#urun-")) openDetail(location.hash.slice(6), true);
+</script>
+</body>
+</html>

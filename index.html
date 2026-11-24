@@ -878,7 +878,7 @@ function message(){
   let txt = "Merhaba Hey Farmela, ön sipariş vermek istiyorum:\n" + lines.join("\n");
   if (t.known) txt += `\n\nFiyatı belli olanların toplamı: ${tl(t.known)}`;
   txt += `\n\nAdım: ${who.name.trim() || "..."}`;
-  txt += `\nTeslimat: ${who.how === "eve" ? "Adrese teslim" : who.how === "eczane" ? "Eczaneden teslim alacağım" : "..."}`;
+  txt += `\nTeslimat: ${who.how === "eve" ? "Adrese teslim" : who.how === "eczane" ? "Gelip alacağım" : "..."}`;
   if (who.how !== "eczane") txt += `\nAdres: ${(who.address || "").trim() || "..."}`;
   return txt;
 }
@@ -903,7 +903,7 @@ function renderSheet(){
   const t = totals();
   let hint = "";
   if (t.known >= FREE_FROM) hint = "Teslimat ücretsiz.";
-  else if (t.known > 0) hint = `Teslimat ücreti: ${FEE} TL. ${tl(FREE_FROM - t.known)} daha eklemeniz halinde teslimat ücretsizdir. Eczaneden teslim alımda ücret alınmaz.`;
+  else if (t.known > 0) hint = `Teslimat ücreti: ${FEE} TL. ${tl(FREE_FROM - t.known)} daha eklemeniz halinde teslimat ücretsizdir. Gelip almanız halinde ücret alınmaz.`;
   if (t.unknown) hint += (hint ? " " : "") + `${t.unknown} ürünün fiyatı WhatsApp üzerinden bildirilecektir.`;
   body.innerHTML =
     `<p class="stepline">1 · Ürünleri kontrol edin</p>` +
@@ -912,7 +912,7 @@ function renderSheet(){
     `<div class="totals">${t.known ? `<div class="row big"><span>Toplam</span><span>${tl(t.known)}${t.unknown ? " +" : ""}</span></div>` : ""}<p class="hint">${hint}</p></div>` +
     `<p class="stepline">2 · Size nasıl ulaşalım?</p>` +
     `<div class="field"><label class="t" for="name">Adınız <span class="opt">(isteğe bağlı)</span></label><input id="name" type="text" autocomplete="name" value="${esc(who.name)}" placeholder="Örn. Ayşe Hanım"></div>` +
-    `<fieldset class="field"><legend>Teslimat şekli</legend><div class="choices">${choice("how","eve","Adrese teslim",who.how==="eve")}${choice("how","eczane","Eczaneden teslim alacağım",who.how==="eczane")}</div></fieldset>` +
+    `<fieldset class="field"><legend>Teslimat şekli</legend><div class="choices">${choice("how","eve","Adrese teslim",who.how==="eve")}${choice("how","eczane","Gelip alacağım",who.how==="eczane")}</div></fieldset>` +
     `<div class="field" id="addrField"${who.how==="eczane" ? " hidden" : ""}><label class="t" for="address">Adresiniz</label><textarea id="address" rows="3" autocomplete="street-address" placeholder="Mahalle, sokak, bina ve daire no">${esc(who.address)}</textarea></div>` +
     `<p class="stepline">3 · Gönderin</p>` +
     `<a class="primary" id="sendWa" href="${waLink(message())}" target="_blank" rel="noopener">WhatsApp ile gönder</a>` +

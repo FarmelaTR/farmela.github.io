@@ -246,7 +246,7 @@ fieldset{border:0;margin:0;padding:0}
 <div class="wrap">
   <header>
     <div class="head"><img class="logo" src="img/logo.webp" alt="Farmela logosu" width="120" height="123"><div><p class="kicker">Şişli · Elden teslimat</p><h1 class="brand">Hey Farmela</h1></div></div>
-    <p class="tag">Vitamin, takviye ve dermokozmetik ürünleri adresinize teslim ediyoruz.</p>
+    <p class="tag">Vitamin, takviye ve dermokozmetik ürünlerinizi sizin adınıza eczaneden temin ediyor, adresinize teslim ediyoruz.</p>
     <button type="button" class="textsize" id="textsize" aria-pressed="false"><span class="aa">A+</span> Yazıyı büyüt</button>
     <div class="infos">
       <details class="info">
@@ -287,6 +287,7 @@ fieldset{border:0;margin:0;padding:0}
 
   <footer>
     <p>Fiyatlar Kasım 2026 itibarıyla geçerlidir ve değişiklik gösterebilir. Güncel fiyat, sipariş onayında bildirilir.</p>
+    <p>Hey Farmela, ürünleri müşterileri adına eczaneden satın alıp teslim eden bir aracılık hizmetidir.</p>
     <p>Gıda takviyeleri ilaç değildir, hastalıkların önlenmesi veya tedavisi amacıyla kullanılmaz.</p>
     <p>WhatsApp: 0533 357 37 84 · <a href="https://instagram.com/farmelatr" target="_blank" rel="noopener">Instagram</a> · <a href="https://farmelatr.com" target="_blank" rel="noopener">farmelatr.com</a></p>
   </footer>
@@ -903,11 +904,11 @@ function renderDetail(){
     : `<button type="button" class="add" data-add="${key}">+ Listeye ekle${i.vars ? ` (${esc(i.vars[detailVar].label)})` : ""}</button>`;
   const note = isSupp(i)
     ? "Takviye edici gıdadır, ilaç değildir. Kullanım miktarı için ambalajı okuyun. Hamilelik, emzirme, hastalık veya ilaç kullanımında önce doktorunuza ya da eczacınıza danışın."
-    : "Kullanmadan önce ambalajdaki talimatları okuyun. Sorularınız için eczacımıza WhatsApp üzerinden ulaşabilirsiniz.";
+    : "Kullanmadan önce ambalajdaki talimatları okuyun. Sorularınız için eczacıya WhatsApp üzerinden ulaşabilirsiniz.";
   $("#detailBody").innerHTML = big +
     `<p class="dcat">${CATS.find(c => c[0]===i.cat)[1]}</p><h3 class="dname">${esc(i.name)}</h3>${i.pop ? '<span class="badge">Çok tercih edilen</span>' : ""}${sizes}${price}` +
     `<p class="ddesc">${esc(i.desc || "Bu ürünle ilgili sorularınız için WhatsApp üzerinden bize ulaşabilirsiniz.")}</p>` +
-    `<div class="dact">${act}${shopHtml(i, cur, pending)}<a class="ask-btn" style="margin:0" href="${waLink(`Merhaba Hey Farmela, ${cur.name} hakkında bir sorum var: `)}" target="_blank" rel="noopener">Bu ürünü eczacımıza sorun</a></div>` +
+    `<div class="dact">${act}${shopHtml(i, cur, pending)}<a class="ask-btn" style="margin:0" href="${waLink(`Merhaba Hey Farmela, ${cur.name} hakkında bir sorum var: `)}" target="_blank" rel="noopener">Bu ürünü eczacıya sorun</a></div>` +
     `<p class="dnote">${note}</p>`;
 }
 function openDetail(id, fromHistory){
